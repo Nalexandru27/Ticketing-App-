@@ -4,11 +4,13 @@
 
 class Location {
 private:
+
 	int noRows = 0;
 	int* seatsPerRow = nullptr;
 	char* address = nullptr;
 	int maxNoSeats = 0;
 	//zones?
+	static int noLocations;
 public:
 	void setNoRows(int newNoRows) {
 		if (newNoRows > 0) {
@@ -24,7 +26,7 @@ public:
 	}
 
 
-	void setSeatsPerRow(int* seatsPerRow, int noRows) {
+	void setSeatsPerRow(int* seatsPerRow) {
 		if (seatsPerRow == nullptr) {
 			throw std::exception("Invalid number of seats per row.");
 		}
@@ -33,8 +35,10 @@ public:
 				delete[] this->seatsPerRow;
 				this->seatsPerRow = nullptr;
 			}
-			this->seatsPerRow = new int[noRows];
-			memcpy(this->seatsPerRow, seatsPerRow, noRows);
+			this->seatsPerRow = new int[this->noRows];
+			for (int i = 0; i < this->noRows; ++i) {
+				this->seatsPerRow[i] = seatsPerRow[i];
+			}
 		}
 	}
 
@@ -88,21 +92,26 @@ public:
 		return this->maxNoSeats;
 	}
 
+	int static getNoLocations() {
+		return Location::noLocations;
+	}
 
 	Location(){
-
+		this->noLocations++;
 	}
 
 	Location(int noRows, int* seatsPerRow, const char* address, int maxNoSeats) {
+		this->noLocations++;
 		setNoRows(noRows);
-		setSeatsPerRow(seatsPerRow,this->noRows);
+		setSeatsPerRow(seatsPerRow);
 		setAddress(address);
 		setMaxNoSeats(maxNoSeats);
 	}
 
 	Location(int noRows, int* seatsPerRow, const char* address) {
+		this->noLocations++;
 		setNoRows(noRows);
-		setSeatsPerRow(seatsPerRow, this->noRows);
+		setSeatsPerRow(seatsPerRow);
 		setAddress(address);
 		for (int i = 0; i < this->noRows; i++) {
 		this->maxNoSeats += this->seatsPerRow[i];
@@ -110,13 +119,15 @@ public:
 	}
 
 	Location(const Location& source) {
+		this->noLocations++;
 		setNoRows(source.noRows);
-		setSeatsPerRow(source.seatsPerRow, source.noRows);
+		setSeatsPerRow(source.seatsPerRow);
 		setAddress(source.address);
 		setMaxNoSeats(source.maxNoSeats);
 	}
 
 	~Location() {
+		this->noLocations--;
 		delete[] this->address;
 		delete[] this->seatsPerRow;
 	}
@@ -124,17 +135,21 @@ public:
 
 	void operator=(const Location& source) {
 		setNoRows(source.noRows);
-		setSeatsPerRow(source.seatsPerRow, source.noRows);
+		setSeatsPerRow(source.seatsPerRow);
 		setAddress(source.address);
 		setMaxNoSeats(source.maxNoSeats);
 	}
 
 
 	friend std::ostream& operator<<(std::ostream& out, const Location& location) {
-		out << "Location address is: " << location.address << std::endl;
-		out << "Location has: " << location.noRows << " rows" << std::endl;
-		for (int i=0; i < location.noRows; i++) {
-			out << "Row " << i + 1 << " has " << location.seatsPerRow[i] << " ";
+		if (location.address != nullptr) {
+			out << "Location address is: " << location.address << std::endl;
+		}
+		if (location.seatsPerRow != nullptr) {
+			out << "Location has: " << location.noRows << " rows" << std::endl;
+			for (int i=0; i < location.noRows; i++) {
+				out << "Row " << i + 1 << " has " << location.seatsPerRow[i] << std::endl;
+			}
 		}
 		out << "Location has a maximum seats of: " << location.maxNoSeats;
 		return out;
@@ -142,7 +157,7 @@ public:
 
 
 	friend std::istream& operator>>(std::istream& in, Location& location) {
-		std::cout << "What is the location Address? Please provide the country, city, street and number of the street.";
+		std::cout << std::endl<< "What is the location Address? Please provide the country, city, street and number of the street:"<<std::endl;
 		char temp[100] = "";
 		in.getline(temp, sizeof(temp));
 		if (strlen(temp) < 15) {
@@ -166,15 +181,38 @@ public:
 			std::cout << "Please provide the number of seats for row[" << i+1 << "]=";
 			in >> seatsPerRow2[i];
 		}
-		location.setSeatsPerRow(seatsPerRow2, noRows2);
+		location.setSeatsPerRow(seatsPerRow2);
 		std::cout << "Enter the maxim number of seats for this location: ";
 		in >> location.maxNoSeats;
 		return in;
 	}
 };
 
+int Location::noLocations = 0;
 
 int main() {
-	std::cout << std::endl << "Hello!";
+
+	//testing the class Location
+	int* array = new int[5];
+	array[0] = 4;
+	array[1] = 10;
+	array[2] = 5;
+	array[3] = 2;
+	array[4] = 7;
 	Location location1;
+	location1.setAddress("piata romana");
+	location1.setMaxNoSeats(205);
+	location1.setNoRows(5);
+	location1.setSeatsPerRow(array);
+	std :: cout << location1 << std::endl;
+
+	Location location2(5, new int[5] {1, 2, 4, 5, 6}, "piata resita", 2024);
+	std::cout << location2;
+
+	Location location3;
+	//std::cin >> location2;
+	//std::cout << std::endl << location2;
+	std::cout << std:: endl<<Location::getNoLocations();
+	//end of testing
+
 }
