@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 
+int Location::noLocations = 0;
 
 void Location::setNoRows(int newNoRows) {
 	if (newNoRows > 0) {
@@ -15,7 +16,6 @@ void Location::setNoRows(int newNoRows) {
 int Location::getNoRows() {
 	return this->noRows;
 }
-
 
 void Location::setSeatsPerRow(int* seatsPerRow) {
 	if (seatsPerRow == nullptr) {
