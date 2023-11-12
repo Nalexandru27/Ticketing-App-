@@ -92,15 +92,55 @@ Location::Location() {
 	this->noLocations++;
 }
 
-Location::Location(int noRows, int* seatsPerRow, const char* address, int maxNoSeats) {
+void Location::setZones(const std::string* newZones,int size) {
+	if (newZones == nullptr) {
+		throw std::exception("Provide data for the Zones/Areas of the location!");
+	}
+	else {
+		if (this->zones != nullptr) {
+			delete[]zones;
+			this->zones = nullptr;
+		}
+		if (size > 0) {
+			this->numZones = size;
+		}
+		else {
+			throw std::exception("Invalid number of zones for location");
+		}
+		this->zones = new std::string[size];
+		for (size_t i = 0; i < size; i++) {
+			this->zones[i] = newZones[i];
+		}
+	}
+}
+
+std::string* Location::getZones() {
+	if (this->zones == nullptr) {
+		throw std::exception("No data available for zones.");
+	}
+	else {
+		std::string* copy = new std::string[this->getNumZones()];
+		for (int i = 0; i < getNumZones(); i++) {
+			copy[i] = this->zones[i];
+		}
+		return copy;
+	}
+}
+
+int Location::getNumZones() {
+	return this->numZones;
+}
+
+Location::Location(int noRows, int* seatsPerRow, const char* address, int maxNoSeats,std::string* zones,int noZones) {
 	this->noLocations++;
 	setNoRows(noRows);
 	setSeatsPerRow(seatsPerRow);
 	setAddress(address);
 	setMaxNoSeats(maxNoSeats);
+	setZones(zones, noZones);
 }
 
-Location::Location(int noRows, int* seatsPerRow, const char* address) {
+Location::Location(int noRows, int* seatsPerRow, const char* address, std::string* zones, int noZones) {
 	this->noLocations++;
 	setNoRows(noRows);
 	setSeatsPerRow(seatsPerRow);
@@ -108,6 +148,7 @@ Location::Location(int noRows, int* seatsPerRow, const char* address) {
 	for (int i = 0; i < this->noRows; i++) {
 		this->maxNoSeats += this->seatsPerRow[i];
 	}
+	setZones(zones, noZones);
 }
 
 Location::Location(const Location& source) {
@@ -116,12 +157,14 @@ Location::Location(const Location& source) {
 	setSeatsPerRow(source.seatsPerRow);
 	setAddress(source.address);
 	setMaxNoSeats(source.maxNoSeats);
+	setZones(source.zones, source.numZones);
 }
 
 Location::~Location() {
 	this->noLocations--;
 	delete[] this->address;
 	delete[] this->seatsPerRow;
+	delete[] this->zones;
 }
 
 
@@ -130,6 +173,7 @@ void Location::operator=(const Location& source) {
 	setSeatsPerRow(source.seatsPerRow);
 	setAddress(source.address);
 	setMaxNoSeats(source.maxNoSeats);
+	setZones(source.zones, source.numZones);
 }
 
 
@@ -143,7 +187,14 @@ std::ostream& operator<<(std::ostream& out, const Location& location) {
 			out << "Row " << i + 1 << " has " << location.seatsPerRow[i] << std::endl;
 		}
 	}
-	out << "Location has a maximum seats of: " << location.maxNoSeats;
+	out << "Location has a maximum seats of: " << location.maxNoSeats << std::endl;
+	if (location.zones != nullptr) {
+		out << "Locations zones are: " << std::endl;
+		for (int i = 0; i < location.numZones; i++) {
+			out << location.zones[i] << "   ";
+		}
+		out << std::endl;
+	}
 	return out;
 }
 
@@ -174,6 +225,19 @@ std::istream& operator>>(std::istream& in, Location& location) {
 	location.setSeatsPerRow(seatsPerRow2);
 	std::cout << "Enter the maxim number of seats for this location: ";
 	in >> location.maxNoSeats;
+	std::cout << "Enter the number of zones for this location: ";
+	in >> location.numZones;
+	if (location.numZones > 0) {
+		location.zones = new std::string[location.numZones+1];
+		in.ignore();
+		for (int i = 0; i < location.numZones; i++) {
+			std::cout << "Please enter zone[" << i + 1 << "]: ";
+			std::string zone;
+			std::getline(in, zone);
+			location.zones[i] = zone;
+		}
+	}
+	
 	return in;
 }
 

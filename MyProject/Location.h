@@ -11,6 +11,8 @@ private:
 	int maxNoSeats = 0;
 	//zones?
 	static int noLocations;
+	std::string* zones = nullptr;
+	int numZones = 0;
 public:
 	//setters & getters
 	void setNoRows(int newNoRows);
@@ -25,12 +27,17 @@ public:
 	void setMaxNoSeats(int newMaxNoSeats);
 	int getMaxNoSeats();
 
+	void setZones(const std::string* newZones,int size);
+	std::string* getZones();
+
+	int getNumZones();
+
 	int static getNoLocations();
 
 	//constructors
 	Location();
-	Location(int noRows, int* seatsPerRow, const char* address, int maxNoSeats);
-	Location(int noRows, int* seatsPerRow, const char* address);
+	Location(int noRows, int* seatsPerRow, const char* address, int maxNoSeats, std::string* zones, int noZones);
+	Location(int noRows, int* seatsPerRow, const char* address, std::string* zones, int noZones);
 
 	//copy constructor
 	Location(const Location& source);
