@@ -1,192 +1,237 @@
 #include <iostream>
 #include <string>
+#include "Location.h"
 
-
-class Location {
-private:
-
-	int noRows = 0;
-	int* seatsPerRow = nullptr;
-	char* address = nullptr;
-	int maxNoSeats = 0;
-	//zones?
-	static int noLocations;
-public:
-	void setNoRows(int newNoRows) {
-		if (newNoRows > 0) {
-			this->noRows = newNoRows;
-		}
-		else {
-			throw std::exception ("Invalid number of rows. Must be greater than 0.");
-		}
-	}
-
-	int getNoRows() {
-		return this->noRows;
-	}
-
-
-	void setSeatsPerRow(int* seatsPerRow) {
-		if (seatsPerRow == nullptr) {
-			throw std::exception("Invalid number of seats per row.");
-		}
-		else {
-			if (this->seatsPerRow != nullptr) {
-				delete[] this->seatsPerRow;
-				this->seatsPerRow = nullptr;
-			}
-			this->seatsPerRow = new int[this->noRows];
-			for (int i = 0; i < this->noRows; ++i) {
-				this->seatsPerRow[i] = seatsPerRow[i];
-			}
-		}
-	}
-
-	int* getSeatsPerRow() {
-		if (this->seatsPerRow == nullptr || this->noRows == 0) {
-			throw std::exception("Can't provide number of seats per row because their is missing data");
-		}
-		else {
-			int* copy = new int[this->noRows];
-			memcpy(copy, this->seatsPerRow, noRows);
-			return copy;
-		}
-	}
-
-
-	void setAddress(const char* newAddress) {
-		if (newAddress == nullptr) {
-			throw std::exception("You didn't provide an adrress");
-		}
-		else {
-			if (this->address != nullptr) {
-				delete[] this->address;
-				this->address = nullptr;
-			}
-			this->address = new char[strlen(newAddress) + 1];
-			strcpy_s(this->address, strlen(newAddress) + 1, newAddress);
-		}
-	}
-
-	char* getAddress() {
-		if (this->address == nullptr) {
-			throw std::exception("There is no address yet");
-		}
-		else {
-			char* copy = new char[strlen(this->address) + 1];
-			strcpy_s(copy, strlen(this->address) + 1, this->address);
-		}
-	}
-
-
-	void setMaxNoSeats(int newMaxNoSeats) {
-		if (newMaxNoSeats > 0) {
-			this->maxNoSeats = newMaxNoSeats;
-		}
-		else {
-			throw std::exception("Invalid number of max seats. Must be greater than 0.");
-		}
-	}
-
-	int getMaxNoSeats() {
-		return this->maxNoSeats;
-	}
-
-	int static getNoLocations() {
-		return Location::noLocations;
-	}
-
-	Location(){
-		this->noLocations++;
-	}
-
-	Location(int noRows, int* seatsPerRow, const char* address, int maxNoSeats) {
-		this->noLocations++;
-		setNoRows(noRows);
-		setSeatsPerRow(seatsPerRow);
-		setAddress(address);
-		setMaxNoSeats(maxNoSeats);
-	}
-
-	Location(int noRows, int* seatsPerRow, const char* address) {
-		this->noLocations++;
-		setNoRows(noRows);
-		setSeatsPerRow(seatsPerRow);
-		setAddress(address);
-		for (int i = 0; i < this->noRows; i++) {
-		this->maxNoSeats += this->seatsPerRow[i];
-		}
-	}
-
-	Location(const Location& source) {
-		this->noLocations++;
-		setNoRows(source.noRows);
-		setSeatsPerRow(source.seatsPerRow);
-		setAddress(source.address);
-		setMaxNoSeats(source.maxNoSeats);
-	}
-
-	~Location() {
-		this->noLocations--;
-		delete[] this->address;
-		delete[] this->seatsPerRow;
-	}
-
-
-	void operator=(const Location& source) {
-		setNoRows(source.noRows);
-		setSeatsPerRow(source.seatsPerRow);
-		setAddress(source.address);
-		setMaxNoSeats(source.maxNoSeats);
-	}
-
-
-	friend std::ostream& operator<<(std::ostream& out, const Location& location) {
-		if (location.address != nullptr) {
-			out << "Location address is: " << location.address << std::endl;
-		}
-		if (location.seatsPerRow != nullptr) {
-			out << "Location has: " << location.noRows << " rows" << std::endl;
-			for (int i=0; i < location.noRows; i++) {
-				out << "Row " << i + 1 << " has " << location.seatsPerRow[i] << std::endl;
-			}
-		}
-		out << "Location has a maximum seats of: " << location.maxNoSeats;
-		return out;
-	}
-
-
-	friend std::istream& operator>>(std::istream& in, Location& location) {
-		std::cout << std::endl<< "What is the location Address? Please provide the country, city, street and number of the street:"<<std::endl;
-		char temp[100] = "";
-		in.getline(temp, sizeof(temp));
-		if (strlen(temp) < 15) {
-			throw std::exception("The address is too short. Please provide more information.");
-		}
-		else {
-			if (location.address != nullptr) {
-				delete[] location.address;
-				location.address = nullptr;
-			}
-			
-			location.address = new char[strlen(temp) + 1];
-			strcpy_s(location.address, strlen(temp) + 1, temp);
-		}
-		std::cout << "Enter the number of rows: ";
-		int noRows2 = 0;
-		in >> noRows2;
-		location.setNoRows(noRows2);
-		int* seatsPerRow2 = new int[noRows2];
-		for (int i = 0; i < noRows2; i++) {
-			std::cout << "Please provide the number of seats for row[" << i+1 << "]=";
-			in >> seatsPerRow2[i];
-		}
-		location.setSeatsPerRow(seatsPerRow2);
-		std::cout << "Enter the maxim number of seats for this location: ";
-		in >> location.maxNoSeats;
-		return in;
-	}
-};
+//class Location {
+//private:
+//	int noRows = 0;
+//	int* seatsPerRow = nullptr;
+//	char* address = nullptr;
+//	int maxNoSeats = 0;
+//	//zones?
+//	static int noLocations;
+//public:
+//	void setNoRows(int newNoRows) {
+//		if (newNoRows > 0) {
+//			this->noRows = newNoRows;
+//		}
+//		else {
+//			throw std::exception ("Invalid number of rows. Must be greater than 0.");
+//		}
+//	}
+//
+//	int getNoRows() {
+//		return this->noRows;
+//	}
+//
+//
+//	void setSeatsPerRow(int* seatsPerRow) {
+//		if (seatsPerRow == nullptr) {
+//			throw std::exception("Invalid number of seats per row.");
+//		}
+//		else {
+//			if (this->seatsPerRow != nullptr) {
+//				delete[] this->seatsPerRow;
+//				this->seatsPerRow = nullptr;
+//			}
+//			this->seatsPerRow = new int[this->noRows];
+//			for (int i = 0; i < this->noRows; ++i) {
+//				this->seatsPerRow[i] = seatsPerRow[i];
+//			}
+//		}
+//	}
+//
+//	int* getSeatsPerRow() {
+//		if (this->seatsPerRow == nullptr || this->noRows == 0) {
+//			throw std::exception("Can't provide number of seats per row because their is missing data");
+//		}
+//		else {
+//			int* copy = new int[this->noRows];
+//			memcpy(copy, this->seatsPerRow, noRows);
+//			return copy;
+//		}
+//	}
+//
+//
+//	void setAddress(const char* newAddress) {
+//		if (newAddress == nullptr) {
+//			throw std::exception("You didn't provide an adrress");
+//		}
+//		else {
+//			if (this->address != nullptr) {
+//				delete[] this->address;
+//				this->address = nullptr;
+//			}
+//			this->address = new char[strlen(newAddress) + 1];
+//			strcpy_s(this->address, strlen(newAddress) + 1, newAddress);
+//		}
+//	}
+//
+//	char* getAddress() {
+//		if (this->address == nullptr) {
+//			throw std::exception("There is no address yet");
+//		}
+//		else {
+//			char* copy = new char[strlen(this->address) + 1];
+//			strcpy_s(copy, strlen(this->address) + 1, this->address);
+//			return copy;
+//		}
+//	}
+//
+//
+//	void setMaxNoSeats(int newMaxNoSeats) {
+//		if (newMaxNoSeats > 0) {
+//			this->maxNoSeats = newMaxNoSeats;
+//		}
+//		else {
+//			throw std::exception("Invalid number of max seats. Must be greater than 0.");
+//		}
+//	}
+//
+//	int getMaxNoSeats() {
+//		return this->maxNoSeats;
+//	}
+//
+//	int static getNoLocations() {
+//		return Location::noLocations;
+//	}
+//
+//	Location(){
+//		this->noLocations++;
+//	}
+//
+//	Location(int noRows, int* seatsPerRow, const char* address, int maxNoSeats) {
+//		this->noLocations++;
+//		setNoRows(noRows);
+//		setSeatsPerRow(seatsPerRow);
+//		setAddress(address);
+//		setMaxNoSeats(maxNoSeats);
+//	}
+//
+//	Location(int noRows, int* seatsPerRow, const char* address) {
+//		this->noLocations++;
+//		setNoRows(noRows);
+//		setSeatsPerRow(seatsPerRow);
+//		setAddress(address);
+//		for (int i = 0; i < this->noRows; i++) {
+//		this->maxNoSeats += this->seatsPerRow[i];
+//		}
+//	}
+//
+//	Location(const Location& source) {
+//		this->noLocations++;
+//		setNoRows(source.noRows);
+//		setSeatsPerRow(source.seatsPerRow);
+//		setAddress(source.address);
+//		setMaxNoSeats(source.maxNoSeats);
+//	}
+//
+//	~Location() {
+//		this->noLocations--;
+//		delete[] this->address;
+//		delete[] this->seatsPerRow;
+//	}
+//
+//
+//	void operator=(const Location& source) {
+//		setNoRows(source.noRows);
+//		setSeatsPerRow(source.seatsPerRow);
+//		setAddress(source.address);
+//		setMaxNoSeats(source.maxNoSeats);
+//	}
+//
+//
+//	friend std::ostream& operator<<(std::ostream& out, const Location& location) {
+//		if (location.address != nullptr) {
+//			out << "Location address is: " << location.address << std::endl;
+//		}
+//		if (location.seatsPerRow != nullptr) {
+//			out << "Location has: " << location.noRows << " rows" << std::endl;
+//			for (int i=0; i < location.noRows; i++) {
+//				out << "Row " << i + 1 << " has " << location.seatsPerRow[i] << std::endl;
+//			}
+//		}
+//		out << "Location has a maximum seats of: " << location.maxNoSeats;
+//		return out;
+//	}
+//
+//
+//	friend std::istream& operator>>(std::istream& in, Location& location) {
+//		std::cout << std::endl<< "What is the location Address? Please provide the country, city, street and number of the street:"<<std::endl;
+//		char temp[100] = "";
+//		in.getline(temp, sizeof(temp));
+//		if (strlen(temp) < 15) {
+//			throw std::exception("The address is too short. Please provide more information.");
+//		}
+//		else {
+//			if (location.address != nullptr) {
+//				delete[] location.address;
+//				location.address = nullptr;
+//			}
+//			
+//			location.address = new char[strlen(temp) + 1];
+//			strcpy_s(location.address, strlen(temp) + 1, temp);
+//		}
+//		std::cout << "Enter the number of rows: ";
+//		int noRows2 = 0;
+//		in >> noRows2;
+//		location.setNoRows(noRows2);
+//		int* seatsPerRow2 = new int[noRows2];
+//		for (int i = 0; i < noRows2; i++) {
+//			std::cout << "Please provide the number of seats for row[" << i+1 << "]=";
+//			in >> seatsPerRow2[i];
+//		}
+//		location.setSeatsPerRow(seatsPerRow2);
+//		std::cout << "Enter the maxim number of seats for this location: ";
+//		in >> location.maxNoSeats;
+//		return in;
+//	}
+//
+//
+//	//operator[]
+//	int& operator[](int row) {
+//		if (this->seatsPerRow != nullptr && row <= this->noRows-1) {
+//			return this->seatsPerRow[row];
+//		}
+//		else {
+//			throw std::exception("Couldn't provide the value at that index");
+//		}
+//	}
+//
+//	//operator/
+//	int operator/(int seats) {
+//		if (this->noRows > 0) {
+//			return this->noRows / seats;
+//		}
+//		else {
+//			throw std::exception("Can't divide 0");
+//		}
+//	}
+//
+//	//operator++
+//	void operator++() {
+//		++this->noRows;
+//	}
+//
+//	void operator++(int) {
+//		this->noRows++;
+//	}
+//
+//	//operator!
+//	bool operator!() {
+//		return !this->address; //return true is address = nullptr, false if address exists
+//	}
+//
+//	//operator<=
+//	bool operator<=(const Location& source) {
+//		return this->maxNoSeats <= source.maxNoSeats;
+//	}
+//
+//	//operator==
+//	bool operator==(const Location& source) {
+//		return this->noRows == source.noRows;
+//	}
+//};
 
 int Location::noLocations = 0;
 
@@ -212,7 +257,26 @@ int main() {
 	Location location3;
 	//std::cin >> location2;
 	//std::cout << std::endl << location2;
-	std::cout << std:: endl<<Location::getNoLocations();
+	std::cout << std:: endl<< Location::getNoLocations();
+	std::cout << std::endl << location2[4];
+	if (!location1) {
+		std::cout << std::endl << "Location1 has no address";
+	}
+	else {
+		std::cout << std::endl << "Location1 address is: " << location1.getAddress();
+	}
+	if (location1 <= location2) {
+		std::cout << std::endl << "Location1 has less seats than Location2";
+	}
+	else {
+		std::cout << std::endl << "Location2 has less seats than Location1";
+	}
+	if (location1 == location2) {
+		std::cout << std::endl << "Location1 has the same no of rows as Location2";
+	}
+	else {
+		std::cout << std::endl << "Location1 has not  the same no of rows as Location2";
+	}
 	//end of testing
 
 }
