@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
+
 class Location {
 private:
 	int noRows = 0;
@@ -94,9 +94,37 @@ public:
 		this->maxNoSeats += this->seatsPerRow[i];
 		}
 	}
+	Location(const Location& source) {
+		setNoRows(source.noRows);
+		setSeatsPerRow(source.seatsPerRow, source.noRows);
+		setAddress(source.address);
+		setMaxNoSeats(source.maxNoSeats);
+	}
+	~Location() {
+		delete[] this->address;
+		delete[] this->seatsPerRow;
+	}
+	void operator=(const Location& source) {
+		setNoRows(source.noRows);
+		setSeatsPerRow(source.seatsPerRow, source.noRows);
+		setAddress(source.address);
+		setMaxNoSeats(source.maxNoSeats);
+	}
+	friend std::ostream& operator<<(std::ostream& out, const Location& location) {
+		out << "Location address is: " << location.address << std::endl;
+		out << "Location has: " << location.noRows << " rows" << std::endl;
+		for (int i=0; i < location.noRows; i++) {
+			out << "Row " << i + 1 << " has " << location.seatsPerRow[i] << " ";
+		}
+		out << "Location has a maximum seats of: " << location.maxNoSeats;
+	}
+	friend std::istream& operator>>(std::istream& in, Location& location) {
+
+	}
 };
 
 
 int main() {
 	std::cout << std::endl << "Hello!";
+
 }
