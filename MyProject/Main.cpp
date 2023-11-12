@@ -176,5 +176,5 @@ public:
 
 int main() {
 	std::cout << std::endl << "Hello!";
-
+	Location location1;
 }
