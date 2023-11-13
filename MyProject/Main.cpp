@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include "Location.h"
-
+#include "Event.h"
 int main() {
 
 	//testing the class Location
