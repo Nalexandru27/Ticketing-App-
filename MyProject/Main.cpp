@@ -51,4 +51,5 @@ int main() {
 	std::cout << std::endl  << location4;
 	//end of testing
 
+	Event e1;
 }
