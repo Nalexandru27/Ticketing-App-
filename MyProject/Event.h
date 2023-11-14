@@ -19,7 +19,7 @@ public:
 	void setName(const char* name);
 	char* getName() const;
 
-	int getNumArtists();
+	int getNumArtists () const;
 
 	void setArtists(const std::string* newArtists,int noArtists);
 	std::string* getArtists() const;
