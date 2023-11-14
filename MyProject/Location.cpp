@@ -119,7 +119,7 @@ std::string* Location::getZones() {
 		throw std::exception("No data available for zones.");
 	}
 	else {
-		std::string* copy = new std::string[this->getNumZones()];
+		std::string* copy = new std::string[getNumZones()];
 		for (int i = 0; i < getNumZones(); i++) {
 			copy[i] = this->zones[i];
 		}

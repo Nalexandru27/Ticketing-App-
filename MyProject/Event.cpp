@@ -8,10 +8,8 @@ void Event::setName(const char* name) {
 			delete[]name;
 			this->name = nullptr;
 		}
-		else {
-			this->name = new char[strlen(name) + 1];
-			strcpy_s(this->name, strlen(name) + 1, name);
-		}
+		this->name = new char[strlen(name) + 1];
+		strcpy_s(this->name, strlen(name) + 1, name);
 	}
 	else {
 		throw std::exception("No name provided for the event");
@@ -28,19 +26,6 @@ char* Event::getName() const{
 	}
 }
 
-Event::Event(const char* name, int day, int month, int year, int hour, int minute) {
-	setDay(day);
-	setMonth(month);
-	setYear(year);
-	setHour(hour);
-	setMinute(minute);
-}
-
-Event::Event(const char* name, int day, int month, int year) {
-	setDay(day);
-	setMonth(month);
-	setYear(year);
-}
 
 void Event::setNumArtists(int newNoArtists) {
 	if (newNoArtists > 0) {
@@ -72,25 +57,107 @@ void Event::setArtists(const std::string* newArtists, int noArtists) {
 		}
 	}
 	else {
-		throw std::exception("No artists yet");
+		throw std::exception("No artists provided");
 	}
 }
 
 std::string* Event::getArtists() const{
 	if (this->artists != nullptr) {
-		std::string* copy = new std::string[getNumArtists()];
-		memcpy(copy, this->artists, getNumArtists());
+		std::string* copy = new std::string[this->getNumArtists()];
+		for (int i = 0; i < this->getNumArtists(); i++) {
+			copy[i] = this->artists[i];
+		}
 		return copy;
 	}
+	else {
+		throw std::exception("No artists yet");
+	}
+}
+Event::Event() {
+
+}
+
+Event::Event(const char* name, int numArtists, std::string* artists) {
+	setName(name);
+	setArtists(artists, numArtists);
+	delete[] artists;
+}
+
+Event::Event(const char* name, int day, int month, int year, int hour, int minute) {
+	setName(name);
+	setDay(day);
+	setMonth(month);
+	setYear(year);
+	setHour(hour);
+	setMinute(minute);
+}
+
+Event::Event(const char* name, int day, int month, int year) {
+	setName(name);
+	setDay(day);
+	setMonth(month);
+	setYear(year);
+}
+
+Event::Event(const char* name, int numArtists, std::string* artists, int day, int month, int year) {
+	setName(name);
+	setArtists(artists, numArtists);
+	delete[] artists;
+	setDay(day);
+	setMonth(month);
+	setYear(year);
+}
+
+Event::Event(const char* name, int numArtists, std::string* artists, int day, int month, int year, int hour, int minute) {
+	setName(name);
+	setArtists(artists, numArtists);
+	delete[] artists;
+	setDay(day);
+	setMonth(month);
+	setYear(year);
+	setHour(hour);
+	setMinute(minute);
 }
 
 std::ostream& operator<<(std::ostream& out, const Event& e) {
-	out << "Name of the event: "; // why I can t use the getter?
+	out << std::endl << std::endl << "------------------------" <<std::endl;
 
+	out << std::endl << "Name of the event: " << e.getName();
+
+	out << std::endl<<  "Number of artists: " << e.getNumArtists();
+
+	std::string* temp = e.getArtists();
+	for (int i = 0; i < e.getNumArtists(); i++) {
+		out << std::endl << i + 1 << ". " << e.artists[i];
+	}
+	delete[] temp;
+
+	if(e.getDay() > 0 && e.getMonth() > 0 && e.getYear() > 0 ){
+		out << std::endl << "Date(dd/mm/yyyy): " << e.getDay() << "/";
+		if (e.getMonth() < 10) {
+			out << "0" << e.getMonth() << "/";
+		}
+		else {
+			out << e.getMonth() << "/";
+		}
+		out << e.getYear();
+	}
+	
+	if(e.getMinute() >= 0 && e.getHour() > 0){
+		out << std::endl << "Time: " << e.getHour();
+		if (e.getMinute() < 10) {
+			out << ":0" << e.getMinute();
+		}
+		else {
+			out << ":" << e.getMinute();
+		}
+	}
+
+	out << std::endl << std::endl << "------------------------" << std::endl << std::endl;
 	return out;
 }
 
 std::istream& operator>>(std::istream& in, Event& e) {
-	e.
+	return in;
 }
 

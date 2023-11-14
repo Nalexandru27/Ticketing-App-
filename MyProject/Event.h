@@ -12,9 +12,12 @@ private:
 
 public:
 	Event();
+	Event(const char* name, int numArtists, std::string* artists);
+	Event(const char* name, int numArtists, std::string* artists, int day, int month, int year, int hour, int minute);
+	Event(const char* name, int numArtists, std::string* artists, int day, int month, int year);
 	Event(const char* name, int day, int month, int year, int hour, int minute);
 	Event(const char* name, int day, int month, int year);
-	Event(const char* name, int year);
+
 
 	void setName(const char* name);
 	char* getName() const;

@@ -1,22 +1,6 @@
 #include "DateTime.h"
 #include <iostream>
 
-void DateTime::setDay(int day) {
-	if (day >= 1 && day <= 31) {
-		this->day = day;
-	}
-	else {
-		throw std::exception("Invalid day");
-	}
-}
-
-DateTime::DateTime() {
-
-}
-DateTime::DateTime(int day, int month, int year, int hour, int minute):day(day),month(month),year(year),hour(hour),minute(minute) {
-
-}
-
 //set Day of event
 void DateTime::setDay(int day) {
 	if (day >= 1 && day <= 31) {
@@ -25,17 +9,17 @@ void DateTime::setDay(int day) {
 	else {
 		throw std::exception("Invalid day");
 	}
-};
+}
 //get Day of event
-int DateTime::getDay() {
+int DateTime::getDay()  const {
 	if (this->day) {
 		return this->day;
 	}
 	else {
-		throw std::exception("Day was not decided yet");
+		throw std::exception("The exact date was not decided yet. Date and time will be announced soon!");
 	}
 		
-};
+}
 
 //set Month of event
 void DateTime::setMonth(int month) {
@@ -47,12 +31,12 @@ void DateTime::setMonth(int month) {
 	}
 };
 //get Month of event
-int DateTime::getMonth() {
+int DateTime::getMonth()  const {
 	if (this->month) {
 		return this->month;
 	}
 	else {
-		throw std::exception("Month was not decided yet");
+		throw std::exception("The exact date was not decided yet. Date and time will be announced soon!");
 	}
 };
 
@@ -66,12 +50,12 @@ void DateTime::setYear(int year) {
 	}
 };
 //get Year of event
-int DateTime::getYear() {
+int DateTime::getYear()  const {
 	if (this->year) {
 		return this->year;
 	}
 	else {
-		throw std::exception("Year was not decided yet");
+		throw std::exception("The exact date was not decided yet. Date and time will be announced soon!");
 	}
 };
 
@@ -85,30 +69,43 @@ void DateTime::setHour(int hour) {
 	}
 };
 //get Hour of event
-int DateTime::getHour() {
+int DateTime::getHour()  const {
 	if (this->hour) {
 		return this->hour;
 	}
 	else {
-		throw std::exception("Hour was not decided yet");
+		throw std::exception("The exact date was not decided yet. Date and time will be announced soon!");
 	}
 };
 
 //set Minute of event
 void DateTime::setMinute(int minute) {
-	if (minute >= 0 && hour <= 59) {
-		this->hour = hour;
+	if (minute >= 0 && minute <= 59) {
+		this->minute = minute;
 	}
 	else {
 		throw std::exception("Invalid minute. Should be between :0 and :59");
 	}
 };
 //get Minute of event
-int DateTime::getMinute() {
-	if (this->hour>=0) {
+int DateTime::getMinute()  const {
+	if (this->minute>=0) {
 		return this->minute;
 	}
 	else {
-		throw std::exception("Minute was not decided yet");
+		throw std::exception("The exact time was not decided yet");
 	}
 };
+
+
+DateTime::DateTime() {
+
+}
+
+DateTime::DateTime(int day, int month, int year, int hour, int minute) {
+	setDay(day);
+	setMonth(month);
+	setYear(year);
+	setHour(hour);
+	setMinute(minute);
+}
