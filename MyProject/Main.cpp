@@ -2,10 +2,11 @@
 #include <string>
 #include "Location.h"
 #include "Event.h"
+#include "ManagementApp.h"
 int main() {
 
 	//testing the class Location
-	int* array = new int[5];
+	/*int* array = new int[5];
 	array[0] = 4;
 	array[1] = 10;
 	array[2] = 5;
@@ -22,10 +23,10 @@ int main() {
 	Location location2(5, new int[5] {1, 2, 4, 5, 6}, "piata resita", 2024, new std::string[4]{ "Category 1", "Category 2", "Category 3", "VIP" }, 4);
 	std::cout << location2;
 
-	Location location3;
+	Location location3;*/
 	//std::cin >> location2;
 	//std::cout << std::endl << location2;
-	std::cout << std::endl << Location::getNoLocations();
+	/*std::cout << std::endl << Location::getNoLocations();
 	std::cout << std::endl << location2[4];
 	if (!location1) {
 		std::cout << std::endl << "Location1 has no address";
@@ -46,12 +47,12 @@ int main() {
 		std::cout << std::endl << "Location1 has not  the same no of rows as Location2";
 	}
 	std::cout << std::endl << std::endl;
-	Location location4;
+	Location location4;*/
 	//std::cin >> location4;
 	//std::cout << std::endl  << location4;
 	//end of testing
 
-	try {
+	/*try {
 		Event e1("doi pe o banca", 3, new std::string[3]{ "mihai","ilona","mircea preda" }, 25, 12, 2025);
 		std::cout << e1;
 	}
@@ -60,10 +61,11 @@ int main() {
 	}
 	catch (...) {
 		std::cout << std::endl << "eroare";
-	}
+	}*/
 	//Event e1("doi pe o banca", 3, new std::string[3]{ "mihai","ilona","mircea preda" });
 	//std::cout << std::endl << e1;
 
+	Event e1("doi pe o banca", 3, new std::string[3]{ "mihai","ilona","mircea preda" }, 25, 12, 2025);
 	Event e2("teatru", 2, new std::string[2]{ "john","maria" }, 15, 11, 2024, 15,34);
 	std::cout << std::endl << e2;
 
@@ -76,4 +78,13 @@ int main() {
 	catch (...) {
 		std::cout << std::endl << "eroare";
 	}*/
+	//std::cout<<std::endl<<ManagementApp::getNumEvents();
+
+	std::cin >> e1;
+	try {
+		std::cout << e1;
+	}
+	catch (std::exception e) {
+		std::cout << std::endl << e.what();
+	}
 }

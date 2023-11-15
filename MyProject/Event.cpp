@@ -1,6 +1,7 @@
 #include "Event.h"
 #include <string>
 #include <iostream>
+#include "ManagementApp.h";
 
 void Event::setName(const char* name) {
 	if (name != nullptr) {
@@ -74,13 +75,14 @@ std::string* Event::getArtists() const{
 	}
 }
 Event::Event() {
-
+	ManagementApp::incrementNumEvents();
 }
 
 Event::Event(const char* name, int numArtists, std::string* artists) {
 	setName(name);
 	setArtists(artists, numArtists);
 	delete[] artists;
+	ManagementApp::incrementNumEvents();
 }
 
 Event::Event(const char* name, int day, int month, int year, int hour, int minute) {
@@ -90,6 +92,7 @@ Event::Event(const char* name, int day, int month, int year, int hour, int minut
 	setYear(year);
 	setHour(hour);
 	setMinute(minute);
+	ManagementApp::incrementNumEvents();
 }
 
 Event::Event(const char* name, int day, int month, int year) {
@@ -97,6 +100,7 @@ Event::Event(const char* name, int day, int month, int year) {
 	setDay(day);
 	setMonth(month);
 	setYear(year);
+	ManagementApp::incrementNumEvents();
 }
 
 Event::Event(const char* name, int numArtists, std::string* artists, int day, int month, int year) {
@@ -106,6 +110,7 @@ Event::Event(const char* name, int numArtists, std::string* artists, int day, in
 	setDay(day);
 	setMonth(month);
 	setYear(year);
+	ManagementApp::incrementNumEvents();
 }
 
 Event::Event(const char* name, int numArtists, std::string* artists, int day, int month, int year, int hour, int minute) {
@@ -117,6 +122,13 @@ Event::Event(const char* name, int numArtists, std::string* artists, int day, in
 	setYear(year);
 	setHour(hour);
 	setMinute(minute);
+	ManagementApp::incrementNumEvents();
+}
+
+Event::~Event() {
+	delete[] name;
+	delete[] artists;
+	ManagementApp::decrementNumEvents();
 }
 
 std::ostream& operator<<(std::ostream& out, const Event& e) {
@@ -158,6 +170,21 @@ std::ostream& operator<<(std::ostream& out, const Event& e) {
 }
 
 std::istream& operator>>(std::istream& in, Event& e) {
+	char buffer[100]="";
+	std::cout << std::endl << "Name of event: ";
+	in.getline(buffer, 100);
+	if (buffer != "") {
+		if (e.name != nullptr) {
+			delete[] e.name;
+			e.name = nullptr;
+		}
+		e.name = new char[strlen(buffer) + 1];
+		strcpy_s(e.name, strlen(buffer) + 1, buffer);
+	}
+	int temp;
+	std::cout << "Number of artists: ";
+	in >> temp;
+	e.setNumArtists(temp);
 	return in;
 }
 

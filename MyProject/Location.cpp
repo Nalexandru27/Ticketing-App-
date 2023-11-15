@@ -1,7 +1,7 @@
 #include "Location.h"
 #include <iostream>
 #include <string>
-
+#include "ManagementApp.h"
 int Location::noLocations = 0;
 
 void Location::setNoRows(int newNoRows) {
@@ -138,6 +138,7 @@ Location::Location(int noRows, int* seatsPerRow, const char* address, int maxNoS
 	setAddress(address);
 	setMaxNoSeats(maxNoSeats);
 	setZones(zones, noZones);
+	ManagementApp::incrementNumLocations();
 }
 
 Location::Location(int noRows, int* seatsPerRow, const char* address, std::string* zones, int noZones) {
@@ -149,6 +150,7 @@ Location::Location(int noRows, int* seatsPerRow, const char* address, std::strin
 		this->maxNoSeats += this->seatsPerRow[i];
 	}
 	setZones(zones, noZones);
+	ManagementApp::incrementNumLocations();
 }
 
 Location::Location(const Location& source) {
@@ -158,6 +160,7 @@ Location::Location(const Location& source) {
 	setAddress(source.address);
 	setMaxNoSeats(source.maxNoSeats);
 	setZones(source.zones, source.numZones);
+	ManagementApp::incrementNumLocations();
 }
 
 Location::~Location() {
@@ -165,6 +168,7 @@ Location::~Location() {
 	delete[] this->address;
 	delete[] this->seatsPerRow;
 	delete[] this->zones;
+	ManagementApp::decrementNumLocations();
 }
 
 
