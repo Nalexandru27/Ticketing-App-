@@ -80,11 +80,19 @@ int main() {
 	}*/
 	//std::cout<<std::endl<<ManagementApp::getNumEvents();
 
-	std::cin >> e1;
+	/*std::cin >> e1;
 	try {
 		std::cout << e1;
 	}
 	catch (std::exception e) {
 		std::cout << std::endl << e.what();
-	}
+	}*/
+
+	//testing operator += and operator cast for location class
+	Location location(3, new int[3] {4, 7, 5}, "piata unirii", new std::string[2]{ "normal", "vip" }, 2);
+	std::cout << location;
+	location += 6;
+	std::cout << std::endl << std::endl << location;
+	int a = (int)location;
+	std::cout << std::endl << a;
 }

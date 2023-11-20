@@ -9,7 +9,6 @@ private:
 	int* seatsPerRow = nullptr;
 	char* address = nullptr;
 	int maxNoSeats = 0;
-	//zones?
 	static int noLocations;
 	std::string* zones = nullptr;
 	int numZones = 0;
@@ -27,7 +26,7 @@ public:
 	void setMaxNoSeats(int newMaxNoSeats);
 	int getMaxNoSeats();
 
-	void setZones(const std::string* newZones,int size);
+	void setZones(const std::string* newZones, int size);
 	std::string* getZones();
 
 	int getNumZones();
@@ -56,13 +55,17 @@ public:
 	//operator[]
 	int& operator[](int row);
 
-	//operator/
+	//operator/ object-int
 	int operator/(int seats);
 
-	//operator++
-	void operator++();
+	//operator int-object
+	friend int operator/(int value, Location& location);
 
-	void operator++(int);
+	//operator++ pre
+	Location operator++();
+
+	//operator++ post
+	Location operator++(int);
 
 	//operator!
 	bool operator!();
@@ -72,5 +75,11 @@ public:
 
 	//operator==
 	bool operator==(const Location& source);
+
+	//operator+=
+	void operator+=(int value);
+
+	//operator cast
+	explicit operator int();
 };
 

@@ -171,7 +171,7 @@ Location::~Location() {
 	ManagementApp::decrementNumLocations();
 }
 
-
+//operator =
 void Location::operator=(const Location& source) {
 	setNoRows(source.noRows);
 	setSeatsPerRow(source.seatsPerRow);
@@ -180,7 +180,7 @@ void Location::operator=(const Location& source) {
 	setZones(source.zones, source.numZones);
 }
 
-
+//operator <<
 std::ostream& operator<<(std::ostream& out, const Location& location) {
 	if (location.address != nullptr) {
 		out << "Location address is: " << location.address << std::endl;
@@ -202,6 +202,7 @@ std::ostream& operator<<(std::ostream& out, const Location& location) {
 	return out;
 }
 
+//operator >>
 std::istream& operator>>(std::istream& in, Location& location) {
 	std::cout << std::endl << "What is the location Address? Please provide the country, city, street and number of the street:" << std::endl;
 	char temp[100] = "";
@@ -256,8 +257,8 @@ int& Location::operator[](int row) {
 	}
 }
 
-//operator/
-int Location:: operator/(int seats) {
+//operator/ object-int
+int Location::operator/(int seats) {
 	if (this->noRows > 0) {
 		return this->noRows / seats;
 	}
@@ -266,13 +267,23 @@ int Location:: operator/(int seats) {
 	}
 }
 
-//operator++
-void Location::operator++() {
-	++this->noRows;
+//operator / int-object
+int operator/(int value, Location& location) {
+	return value / location.getNoRows();
 }
 
-void Location::operator++(int) {
+
+//operator++ pre
+Location Location::operator++() {
+	++this->noRows;
+	return *this;
+}
+
+//operator++ post
+Location Location::operator++(int) {
+	Location copy = *this;
 	this->noRows++;
+	return copy;
 }
 
 //operator!
@@ -288,4 +299,14 @@ bool Location::operator<=(const Location& source) {
 //operator==
 bool Location::operator==(const Location& source) {
 	return this->noRows == source.noRows;
+}
+
+//operator+=
+void Location::operator+=(int value) {
+	this->maxNoSeats += value;
+}
+
+//operator cast
+Location::operator int() {
+	return this->getNumZones();
 }
