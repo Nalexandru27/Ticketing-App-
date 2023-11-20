@@ -31,8 +31,6 @@ public:
 
 	int getNumZones();
 
-	int static getNoLocations();
-
 	//constructors
 	Location();
 	Location(int noRows, int* seatsPerRow, const char* address, int maxNoSeats, std::string* zones, int noZones);

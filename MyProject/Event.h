@@ -2,14 +2,14 @@
 #include <iostream>
 #include <string>
 #include "DateTime.h"
+#include "ManagementApp.h"
 
 class Event : public DateTime {
 private:
 	char* name=nullptr;
 	int numArtists = 0;
 	std::string* artists = nullptr;
-	void setNumArtists(int noArtists);
-	static int noEvent; // implement
+	void setNumArtists(int numArtists);
 public:
 	Event();
 	Event(const char* name, int numArtists, std::string* artists);

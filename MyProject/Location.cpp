@@ -2,7 +2,8 @@
 #include <iostream>
 #include <string>
 #include "ManagementApp.h"
-int Location::noLocations = 0;
+
+
 
 void Location::setNoRows(int newNoRows) {
 	if (newNoRows > 0) {
@@ -84,12 +85,8 @@ int Location::getMaxNoSeats() {
 	return this->maxNoSeats;
 }
 
-int Location::getNoLocations() {
-	return Location::noLocations;
-}
-
 Location::Location() {
-	this->noLocations++;
+	ManagementApp::incrementNumLocations();
 }
 
 void Location::setZones(const std::string* newZones,int size) {
