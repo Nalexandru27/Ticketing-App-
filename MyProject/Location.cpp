@@ -3,7 +3,7 @@
 #include <string>
 #include "ManagementApp.h"
 
-
+int Location::noLocations = 0;
 
 void Location::setNoRows(int newNoRows) {
 	if (newNoRows > 0) {

@@ -66,8 +66,10 @@ int main() {
 	//std::cout << std::endl << e1;
 
 	Event e1("doi pe o banca", 3, new std::string[3]{ "mihai","ilona","mircea preda" }, 25, 12, 2025);
-	Event e2("teatru", 2, new std::string[2]{ "john","maria" }, 15, 11, 2024, 15,34);
+	int v[3]{30,30,35};
+	Event e2("boxing gala", 3, new std::string[3]{ "moro","stoica","petrisor" }, v);
 	std::cout << std::endl << e2;
+	
 
 	/*try {
 		std::cout << std::endl << 

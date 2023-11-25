@@ -7,30 +7,39 @@
 class Event : public DateTime {
 private:
 	char* name=nullptr;
-	int numArtists = 0;
-	std::string* artists = nullptr;
-	void setNumArtists(int numArtists);
+	int numMoments = 0;
+	std::string* moments = nullptr;
+	int durationOfEachMoment[];
 public:
 	Event();
-	Event(const char* name, int numArtists, std::string* artists);
-	Event(const char* name, int numArtists, std::string* artists, int day, int month, int year, int hour, int minute);
-	Event(const char* name, int numArtists, std::string* artists, int day, int month, int year);
+	Event(const char* name, int numMoments, std::string* moments, int durationOfEachMoments[50]);
+	Event(const char* name, int numMoments, std::string* moments, int durationOfEachMoments[50], int day, int month, int year, int hour, int minute);
+	Event(const char* name, int numMoments, std::string* moments, int day, int month, int year);
 	Event(const char* name, int day, int month, int year, int hour, int minute);
 	Event(const char* name, int day, int month, int year);
 	
 	~Event();
 
+	void setDurationOfEachMoment(int duration[]);
+	const int* getDurationOfEachMoment() const;
+
+	int getDurationOfTheEvent();
+
 	void setName(const char* name);
 	char* getName() const;
 
-	int getNumArtists () const;
+	int getNumMoments() const;
+	void setNumMoments(int numMoments);
 
-	void setArtists(const std::string* newArtists,int noArtists);
-	std::string* getArtists() const;
+	void setMoments(const std::string* newMoments,int noMoments);
+	std::string* getMoments() const;
 
 
 	friend std::ostream& operator<<(std::ostream& out, const Event& e);
 	friend std::istream& operator>>(std::istream& in, Event& e);
+
+	//add operators
+
 };
 
 

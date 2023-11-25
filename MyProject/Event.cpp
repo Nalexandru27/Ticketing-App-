@@ -3,6 +3,7 @@
 #include <iostream>
 #include "ManagementApp.h";
 
+//set name
 void Event::setName(const char* name) {
 	if (name != nullptr) {
 		if (this->name != nullptr) {
@@ -16,6 +17,7 @@ void Event::setName(const char* name) {
 		throw std::exception("No name provided for the event");
 	}
 }
+//get name
 char* Event::getName() const{
 	if (this->name != nullptr) {
 		char* copy = new char[strlen(this->name) + 1];
@@ -27,34 +29,63 @@ char* Event::getName() const{
 	}
 }
 
-
-void Event::setNumArtists(int newNoArtists) {
-	if (newNoArtists > 0) {
-		this->numArtists = newNoArtists;
-	}
-	else {
-		throw std::exception("Provide a positive number of artists!");
-	}
-}
-int Event::getNumArtists() const{
-	if (this->numArtists > 0) {
-		return this->numArtists;
-	}
-	else {
-		throw std::exception("No artists yet");
-	}
-}
-
-void Event::setArtists(const std::string* newArtists, int noArtists) {
-	setNumArtists(noArtists);
-	if (newArtists != nullptr && noArtists >= 0) {
-		if (this->artists != nullptr) {
-			delete[]this->artists;
-			this->artists = nullptr;
+//set duration of each moment
+void Event::setDurationOfEachMoment(int duration[]) {
+	if (numMoments > 0) {
+		for (int i = 0; i < numMoments; i++) {
+			this->durationOfEachMoment[i] = duration[i];
 		}
-		this->artists = new std::string[noArtists];
-		for (int i = 0; i < noArtists; i++) {
-			this->artists[i] = newArtists[i];
+	}
+	else {
+		throw std::exception("Could not set the duration of each moment because there are no moments planned yet!");
+	}
+}
+
+//get duration of each moment
+const int* Event::getDurationOfEachMoment() const{
+	return durationOfEachMoment;
+}
+
+//get duration of the whole event
+int Event::getDurationOfTheEvent() {
+	int sum = 0;
+	for (int i = 0; i < this->getNumMoments(); i++) {
+		sum += this->durationOfEachMoment[i];
+	}
+	return sum;
+}
+
+//set the number of moments
+void Event::setNumMoments(int newNumMoments) {
+	if (newNumMoments > 0) {
+		this->numMoments = newNumMoments;
+	}
+	else {
+		throw std::exception("Provide a positive number of moments!");
+	}
+}
+
+//get number of moments
+int Event::getNumMoments() const{
+	if (this->numMoments > 0) {
+		return this->numMoments;
+	}
+	else {
+		throw std::exception("No moments yet");
+	}
+}
+
+//set moments of the event
+void Event::setMoments(const std::string* newMoments, int noMoments) {
+	setNumMoments(noMoments);
+	if (newMoments != nullptr && noMoments >= 0) {
+		if (this->moments != nullptr) {
+			delete[]this->moments;
+			this->moments = nullptr;
+		}
+		this->moments = new std::string[noMoments];
+		for (int i = 0; i < noMoments; i++) {
+			this->moments[i] = newMoments[i];
 		}
 	}
 	else {
@@ -62,11 +93,12 @@ void Event::setArtists(const std::string* newArtists, int noArtists) {
 	}
 }
 
-std::string* Event::getArtists() const{
-	if (this->artists != nullptr) {
-		std::string* copy = new std::string[this->getNumArtists()];
-		for (int i = 0; i < this->getNumArtists(); i++) {
-			copy[i] = this->artists[i];
+//get moments of the event
+std::string* Event::getMoments() const{
+	if (this->moments != nullptr) {
+		std::string* copy = new std::string[this->getNumMoments()];
+		for (int i = 0; i < this->getNumMoments(); i++) {
+			copy[i] = this->moments[i];
 		}
 		return copy;
 	}
@@ -74,14 +106,18 @@ std::string* Event::getArtists() const{
 		throw std::exception("No artists yet");
 	}
 }
+
+
+//constructors
 Event::Event() {
 	ManagementApp::incrementNumEvents();
 }
 
-Event::Event(const char* name, int numArtists, std::string* artists) {
+Event::Event(const char* name, int numMoments, std::string* moments, int durationOfEachMoment[]) {
 	setName(name);
-	setArtists(artists, numArtists);
-	delete[] artists;
+	setMoments(moments, numMoments);
+	delete[] moments;
+	setDurationOfEachMoment(durationOfEachMoment);
 	ManagementApp::incrementNumEvents();
 }
 
@@ -103,20 +139,21 @@ Event::Event(const char* name, int day, int month, int year) {
 	ManagementApp::incrementNumEvents();
 }
 
-Event::Event(const char* name, int numArtists, std::string* artists, int day, int month, int year) {
+Event::Event(const char* name, int numMoments, std::string* moments, int day, int month, int year) {
 	setName(name);
-	setArtists(artists, numArtists);
-	delete[] artists;
+	setMoments(moments, numMoments);
+	delete[] moments;
 	setDay(day);
 	setMonth(month);
 	setYear(year);
 	ManagementApp::incrementNumEvents();
 }
 
-Event::Event(const char* name, int numArtists, std::string* artists, int day, int month, int year, int hour, int minute) {
+Event::Event(const char* name, int numMoments, std::string* artists, int durationOfEachMoment[], int day, int month, int year, int hour, int minute) {
 	setName(name);
-	setArtists(artists, numArtists);
+	setMoments(moments, numMoments);
 	delete[] artists;
+	setDurationOfEachMoment(durationOfEachMoment);
 	setDay(day);
 	setMonth(month);
 	setYear(year);
@@ -125,22 +162,24 @@ Event::Event(const char* name, int numArtists, std::string* artists, int day, in
 	ManagementApp::incrementNumEvents();
 }
 
+//destructor
 Event::~Event() {
 	delete[] name;
-	delete[] artists;
+	delete[] moments;
 	ManagementApp::decrementNumEvents();
 }
 
+//operator <<
 std::ostream& operator<<(std::ostream& out, const Event& e) {
 	out << std::endl << std::endl << "------------------------" <<std::endl;
 
 	out << std::endl << "Name of the event: " << e.getName();
 
-	out << std::endl<<  "Number of artists: " << e.getNumArtists();
+	out << std::endl<<  "Number of artists: " << e.getNumMoments();
 
-	std::string* temp = e.getArtists();
-	for (int i = 0; i < e.getNumArtists(); i++) {
-		out << std::endl << i + 1 << ". " << e.artists[i];
+	std::string* temp = e.getMoments();
+	for (int i = 0; i < e.getNumMoments(); i++) {
+		out << std::endl << i + 1 << ". " << e.moments[i];
 	}
 	delete[] temp;
 
@@ -169,6 +208,7 @@ std::ostream& operator<<(std::ostream& out, const Event& e) {
 	return out;
 }
 
+//operator >>
 std::istream& operator>>(std::istream& in, Event& e) {
 	char buffer[100]="";
 	std::cout << std::endl << "Name of event: ";
@@ -184,7 +224,7 @@ std::istream& operator>>(std::istream& in, Event& e) {
 	int temp;
 	std::cout << "Number of artists: ";
 	in >> temp;
-	e.setNumArtists(temp);
+	e.setNumMoments(temp);
 	return in;
 }
 
