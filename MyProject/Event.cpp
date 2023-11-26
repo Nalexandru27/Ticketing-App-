@@ -30,7 +30,7 @@ char* Event::getName() const{
 }
 
 //set duration of each moment
-void Event::setDurationOfEachMoment(int duration[]) {
+void Event::setDurationOfEachMoment(const int duration[]) {
 	if (this->numMoments > 0 && this->moments != nullptr) {
 		for (int i = 0; i < this->numMoments; i++) {
 			this->durationOfEachMoment[i] = duration[i];
@@ -147,7 +147,7 @@ Event::Event(const char* name, int numMoments, std::string* moments, int day, in
 	ManagementApp::incrementNumEvents();
 }
 
-Event::Event(const char* name, int numMoments, std::string* artists, int durationOfEachMoment[], int day, int month, int year, int hour, int minute) {
+Event::Event(const char* name, int numMoments, std::string* moments, int durationOfEachMoment[], int day, int month, int year, int hour, int minute) {
 	setName(name);
 	setMoments(moments, numMoments);
 	setDurationOfEachMoment(durationOfEachMoment);
@@ -164,6 +164,18 @@ Event::~Event() {
 	delete[] this->name;
 	delete[] this->moments;
 	ManagementApp::decrementNumEvents();
+}
+
+Event::Event(const Event& e) {
+	this->setName(e.getName());
+	this->setNumMoments(e.getNumMoments());
+	this->setMoments(e.getMoments(), this->numMoments);
+	this->setDurationOfEachMoment(e.getDurationOfEachMoment());
+	this->setDay(e.getDay());
+	this->setMonth(e.getMonth());
+	this->setYear(e.getYear());
+	this->setHour(e.getHour());
+	this->setMinute(e.getMinute());
 }
 
 //operator <<
@@ -240,7 +252,7 @@ std::istream& operator>>(std::istream& in, Event& e) {
 			e.moments[i] = aux;
 		}
 	}
-	std::cout << std::endl << "Duration of each moment:" ;
+	std::cout << std::endl << "Duration of each moment(minutes):" ;
 	for (int i = 0; i < e.numMoments; i++) {
 		std::cout << std::endl << i+1 <<". ";
 		in >> temp;
@@ -267,3 +279,92 @@ std::istream& operator>>(std::istream& in, Event& e) {
 	return in;
 }
 
+//operator=
+Event& Event::operator=(const Event& source) {
+	if (this != &source) {
+		if (source.name != nullptr) {
+			this->setName(source.name);
+		}
+		else {
+			throw std::exception("source object has no valid name field");
+		}
+		this->setNumMoments(source.getNumMoments());
+		this->setMoments(source.getMoments(), this->numMoments);
+		this->setDurationOfEachMoment(source.getDurationOfEachMoment());
+		this->setDay(source.getDay());
+		this->setMonth(source.getMonth());
+		this->setYear(source.getYear());
+		this->setHour(source.getHour());
+		this->setMinute(source.getMinute());
+	}
+}
+
+//operator[]
+int Event::operator[](int index) {
+	if (index >= 0 && index < this->getNumMoments()) {
+		return this->durationOfEachMoment[index];
+	}
+	else {
+		throw std::exception("Invalid index");
+	}
+}
+//operator+
+int Event::operator+(int value) {
+	if (value <= 3) {
+		return this->getHour() + value;
+	}
+	else {
+		throw std::exception("Change too big for the hour of the event, maximum 3 hours of delay!");
+	}
+}
+int operator+(int value, Event& e) {
+	if (value <= 3) {
+		return e.getHour() + value;
+	}
+	else {
+		throw std::exception("Change too big for the hour of the event, maximum 3 hours of delay!");
+	}
+}
+
+//operator-- predecrementation
+Event Event::operator--() {
+	--this->durationOfEachMoment[this->getNumMoments() - 1];
+	return *this;
+}
+
+//operator-- postdecrementation
+Event Event::operator--(int) {
+	if (this->numMoments == 0) {
+		return *this;
+	}
+	Event temp = *this;
+	this->numMoments--;
+	std::string* newMomentsArray = new std::string[this->numMoments];
+	for (int i = 0; i < this->numMoments; i++) {
+		newMomentsArray[i] = temp.moments[i];
+	}
+	delete[] this->moments;
+	this->moments = newMomentsArray;
+	return temp;
+}
+
+
+//operator cast (int)
+Event::operator int() {
+	return this->getNumMoments();
+}
+
+//operator!
+bool Event::operator!() {
+	return this->numMoments > 0;
+}
+
+//operator<=
+void Event::operator<=(const Event& e) {
+	if (this->getDurationOfTheEvent() <= e.getDurationOfTheEvent()) {
+		std::cout << std::endl << "First event takes less or the same time as second one";
+	}
+	else {
+		std::cout << std::endl << "Second event takes longer";
+	}
+}

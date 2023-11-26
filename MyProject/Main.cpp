@@ -80,9 +80,26 @@ int main() {
 		//std::cout << std::endl << e2;
 		////std::cout << std::endl << e2;
 		//std::cout << std::endl; std::cout << std::endl;
-		Event e3;
-		std::cin >> e3;
-		std::cout << std::endl << e3;
+		int v[2] = { 45,45 };
+		Event e3("steaua-dinamo", 2, new std::string[2]{ "repriza1","repriza2" }, v, 26, 11, 2023, 20, 45);
+		//std::cin >> e3;
+		//std::cout << std::endl << e3;
+		//Event e4;
+		//e4 = e3;
+		/*std::cout << std::endl << e4;
+		std::cout << std::endl << e4[1];
+		std::cout << std::endl << e4 + 3;
+		std::cout << std::endl << 1 + e4;*/
+		/*std::cout << std::endl << e3--;
+		std::cout << std::endl << e3;*/
+		Event e6 = e3;
+		//std::cout << std::endl<<--e3;
+		//std::cout << std::endl << e6--;
+		//std::cout << std::endl << e6;
+		int b = e3;
+		std::cout << std::endl << b;
+		std::cout << std::endl << !e3;
+		e3 <= e6;
 	}
 	catch (std::exception& e) {
 		std::cout << std::endl << e.what();

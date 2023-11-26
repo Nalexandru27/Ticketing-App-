@@ -18,9 +18,12 @@ public:
 	Event(const char* name, int day, int month, int year, int hour, int minute);
 	Event(const char* name, int day, int month, int year);
 	
+	Event(const Event& e);
+
 	~Event();
 
-	void setDurationOfEachMoment(int duration[]);
+
+	void setDurationOfEachMoment(const int duration[]);
 	const int* getDurationOfEachMoment() const;
 
 	int getDurationOfTheEvent() const;
@@ -39,7 +42,29 @@ public:
 	friend std::istream& operator>>(std::istream& in, Event& e);
 
 	//add operators
+	Event& operator=(const Event& source);
 
+	//operator[]
+	int operator[](int index);
+
+	//operator+
+	int operator+(int value);
+	friend int operator+(int value, Event& e);
+
+	//operator-- predecrementation
+	Event operator--();
+
+	//operator-- postdecrementation
+	Event operator--(int);
+
+	//operator cast (int)
+	operator int();
+
+	//operator!
+	bool operator!();
+
+	//operator<=
+	void operator<=(const Event& e);
 };
 
 
