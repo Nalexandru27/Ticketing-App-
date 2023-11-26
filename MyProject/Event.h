@@ -65,6 +65,9 @@ public:
 
 	//operator<=
 	void operator<=(const Event& e);
+
+	//operator==
+	bool operator==(const Event& e);
 };
 
 

@@ -176,6 +176,7 @@ Event::Event(const Event& e) {
 	this->setYear(e.getYear());
 	this->setHour(e.getHour());
 	this->setMinute(e.getMinute());
+	ManagementApp::incrementNumEvents;
 }
 
 //operator <<
@@ -297,6 +298,7 @@ Event& Event::operator=(const Event& source) {
 		this->setHour(source.getHour());
 		this->setMinute(source.getMinute());
 	}
+	return *this;
 }
 
 //operator[]
@@ -367,4 +369,8 @@ void Event::operator<=(const Event& e) {
 	else {
 		std::cout << std::endl << "Second event takes longer";
 	}
+}
+
+bool Event::operator==(const Event& e) {
+	return e.getDay() == this->getDay();
 }

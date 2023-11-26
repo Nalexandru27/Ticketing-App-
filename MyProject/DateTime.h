@@ -26,6 +26,23 @@ public:
 
 	void setMinute(int minute);
 	int getMinute() const;
-	
+
+	DateTime(const DateTime& dt);
+
+	DateTime& operator=(const DateTime& dt);
+
+	friend std::ostream& operator<<(std::ostream& out, const DateTime& dt);
+	friend std::istream& operator>>(std::istream& in, DateTime& dt);
+
+	int operator-(int value);
+
+	bool operator!();
+
+	bool operator>(const DateTime& dt);
+
+	bool operator==(const DateTime& dt);
+
+	DateTime operator++();
+	DateTime operator++(int);
 };
 
