@@ -9,11 +9,11 @@ private:
 	char* name=nullptr;
 	int numMoments = 0;
 	std::string* moments = nullptr;
-	int durationOfEachMoment[];
+	int durationOfEachMoment[100] = {0};
 public:
 	Event();
-	Event(const char* name, int numMoments, std::string* moments, int durationOfEachMoments[50]);
-	Event(const char* name, int numMoments, std::string* moments, int durationOfEachMoments[50], int day, int month, int year, int hour, int minute);
+	Event(const char* name, int numMoments, std::string* moments, int durationOfEachMoments[]);
+	Event(const char* name, int numMoments, std::string* moments, int durationOfEachMoments[], int day, int month, int year, int hour, int minute);
 	Event(const char* name, int numMoments, std::string* moments, int day, int month, int year);
 	Event(const char* name, int day, int month, int year, int hour, int minute);
 	Event(const char* name, int day, int month, int year);
@@ -23,7 +23,7 @@ public:
 	void setDurationOfEachMoment(int duration[]);
 	const int* getDurationOfEachMoment() const;
 
-	int getDurationOfTheEvent();
+	int getDurationOfTheEvent() const;
 
 	void setName(const char* name);
 	char* getName() const;

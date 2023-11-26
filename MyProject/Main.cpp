@@ -65,12 +65,28 @@ int main() {
 	//Event e1("doi pe o banca", 3, new std::string[3]{ "mihai","ilona","mircea preda" });
 	//std::cout << std::endl << e1;
 
-	Event e1("doi pe o banca", 3, new std::string[3]{ "mihai","ilona","mircea preda" }, 25, 12, 2025);
-	int v[3]{30,30,35};
-	Event e2("boxing gala", 3, new std::string[3]{ "moro","stoica","petrisor" }, v);
-	std::cout << std::endl << e2;
-	
-
+	//Event e1("doi pe o banca", 3, new std::string[3]{ "mihai","ilona","mircea preda" }, 25, 12, 2025);
+	try {
+		//int v[3]={30,30,35};
+		//Event e2("boxing gala", 3, new std::string[3]{ "moro","stoica","petrisor" }, v);
+		//std::cout << e2.getDurationOfTheEvent();
+		//int h[3] = { 24,53,16 };
+		//e2.setDurationOfEachMoment(h);
+		//std::cout << std::endl << e2.getDurationOfTheEvent() << std::endl;
+		//const int* g = e2.getDurationOfEachMoment();
+		//for (int i = 0; i < e2.getNumMoments(); i++) {
+		//	std::cout << g[i] << " ";
+		//}
+		//std::cout << std::endl << e2;
+		////std::cout << std::endl << e2;
+		//std::cout << std::endl; std::cout << std::endl;
+		Event e3;
+		std::cin >> e3;
+		std::cout << std::endl << e3;
+	}
+	catch (std::exception& e) {
+		std::cout << std::endl << e.what();
+	}
 	/*try {
 		std::cout << std::endl << 
 	}
@@ -91,10 +107,10 @@ int main() {
 	}*/
 
 	//testing operator += and operator cast for location class
-	Location location(3, new int[3] {4, 7, 5}, "piata unirii", new std::string[2]{ "normal", "vip" }, 2);
+	/*Location location(3, new int[3] {4, 7, 5}, "piata unirii", new std::string[2]{ "normal", "vip" }, 2);
 	std::cout << location;
 	location += 6;
 	std::cout << std::endl << std::endl << location;
 	int a = (int)location;
-	std::cout << std::endl << a;
+	std::cout << std::endl << a;*/
 }
