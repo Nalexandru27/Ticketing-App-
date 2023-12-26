@@ -3,47 +3,6 @@
 #include <string>
 #include "ManagementApp.h"
 
-int Location::noLocations = 0;
-
-void Location::setNoRows(int newNoRows) {
-	if (newNoRows > 0) {
-		this->noRows = newNoRows;
-	}
-	else {
-		throw std::exception("Invalid number of rows. Must be greater than 0.");
-	}
-}
-
-int Location::getNoRows() {
-	return this->noRows;
-}
-
-void Location::setSeatsPerRow(int* seatsPerRow) {
-	if (seatsPerRow == nullptr) {
-		throw std::exception("Invalid number of seats per row.");
-	}
-	else {
-		if (this->seatsPerRow != nullptr) {
-			delete[] this->seatsPerRow;
-			this->seatsPerRow = nullptr;
-		}
-		this->seatsPerRow = new int[this->noRows];
-		for (int i = 0; i < this->noRows; ++i) {
-			this->seatsPerRow[i] = seatsPerRow[i];
-		}
-	}
-}
-
-int* Location::getSeatsPerRow() {
-	if (this->seatsPerRow == nullptr || this->noRows == 0) {
-		throw std::exception("Can't provide number of seats per row because their is missing data");
-	}
-	else {
-		int* copy = new int[this->noRows];
-		memcpy(copy, this->seatsPerRow, noRows);
-		return copy;
-	}
-}
 
 
 void Location::setAddress(const char* newAddress) {
@@ -72,64 +31,14 @@ char* Location::getAddress() {
 }
 
 
-void Location::setMaxNoSeats(int newMaxNoSeats) {
-	if (newMaxNoSeats > 0) {
-		this->maxNoSeats = newMaxNoSeats;
-	}
-	else {
-		throw std::exception("Invalid number of max seats. Must be greater than 0.");
-	}
-}
-
-int Location::getMaxNoSeats() {
-	return this->maxNoSeats;
-}
-
 Location::Location() {
 	ManagementApp::incrementNumLocations();
 }
-
-void Location::setZones(const std::string* newZones,int size) {
-	if (newZones == nullptr) {
-		throw std::exception("Provide data for the Zones/Areas of the location!");
-	}
-	else {
-		if (this->zones != nullptr) {
-			delete[]zones;
-			this->zones = nullptr;
-		}
-		if (size > 0) {
-			this->numZones = size;
-		}
-		else {
-			throw std::exception("Invalid number of zones for location");
-		}
-		this->zones = new std::string[size];
-		for (size_t i = 0; i < size; i++) {
-			this->zones[i] = newZones[i];
-		}
-	}
+}
 }
 
-std::string* Location::getZones() {
-	if (this->zones == nullptr) {
-		throw std::exception("No data available for zones.");
-	}
-	else {
-		std::string* copy = new std::string[getNumZones()];
-		for (int i = 0; i < getNumZones(); i++) {
-			copy[i] = this->zones[i];
-		}
-		return copy;
-	}
-}
-
-int Location::getNumZones() {
-	return this->numZones;
-}
 
 Location::Location(int noRows, int* seatsPerRow, const char* address, int maxNoSeats,std::string* zones,int noZones) {
-	this->noLocations++;
 	setNoRows(noRows);
 	setSeatsPerRow(seatsPerRow);
 	setAddress(address);
@@ -139,7 +48,6 @@ Location::Location(int noRows, int* seatsPerRow, const char* address, int maxNoS
 }
 
 Location::Location(int noRows, int* seatsPerRow, const char* address, std::string* zones, int noZones) {
-	this->noLocations++;
 	setNoRows(noRows);
 	setSeatsPerRow(seatsPerRow);
 	setAddress(address);
@@ -151,7 +59,6 @@ Location::Location(int noRows, int* seatsPerRow, const char* address, std::strin
 }
 
 Location::Location(const Location& source) {
-	this->noLocations++;
 	setNoRows(source.noRows);
 	setSeatsPerRow(source.seatsPerRow);
 	setAddress(source.address);
@@ -161,7 +68,6 @@ Location::Location(const Location& source) {
 }
 
 Location::~Location() {
-	this->noLocations--;
 	delete[] this->address;
 	delete[] this->seatsPerRow;
 	delete[] this->zones;

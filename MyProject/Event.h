@@ -1,23 +1,21 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "Location.h"
 #include "DateTime.h"
 #include "ManagementApp.h"
 
-class Event : public DateTime {
+class Event{
 private:
 	char* name=nullptr;
 	int numMoments = 0;
 	std::string* moments = nullptr;
 	int durationOfEachMoment[100] = {0};
+	Location location;
+	DateTime dateTime;
 public:
-	Event();
-	Event(const char* name, int numMoments, std::string* moments, int durationOfEachMoments[]);
-	Event(const char* name, int numMoments, std::string* moments, int durationOfEachMoments[], int day, int month, int year, int hour, int minute);
-	Event(const char* name, int numMoments, std::string* moments, int day, int month, int year);
-	Event(const char* name, int day, int month, int year, int hour, int minute);
-	Event(const char* name, int day, int month, int year);
-	
+	Event(){}
+	Event(const char* name, )
 	Event(const Event& e);
 
 	~Event();
@@ -41,7 +39,7 @@ public:
 	friend std::ostream& operator<<(std::ostream& out, const Event& e);
 	friend std::istream& operator>>(std::istream& in, Event& e);
 
-	//add operators
+	//operator=
 	Event& operator=(const Event& source);
 
 	//operator[]

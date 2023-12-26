@@ -9,7 +9,6 @@ private:
 	int* seatsPerRow = nullptr;
 	char* address = nullptr;
 	int maxNoSeats = 0;
-	static int noLocations;
 	std::string* zones = nullptr;
 	int numZones = 0;
 public:

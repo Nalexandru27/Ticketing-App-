@@ -67,12 +67,7 @@ void Event::setNumMoments(int newNumMoments) {
 
 //get number of moments
 int Event::getNumMoments() const{
-	if (this->numMoments > 0) {
-		return this->numMoments;
-	}
-	else {
-		throw std::exception("No moments yet");
-	}
+	return this->numMoments;
 }
 
 //set moments of the event
@@ -113,51 +108,7 @@ Event::Event() {
 	ManagementApp::incrementNumEvents();
 }
 
-Event::Event(const char* name, int numMoments, std::string* moments,int durationOfEachMoment[]) {
-	setName(name);
-	setMoments(moments, numMoments);
-	setDurationOfEachMoment(durationOfEachMoment);
-	ManagementApp::incrementNumEvents();
-}
 
-Event::Event(const char* name, int day, int month, int year, int hour, int minute) {
-	setName(name);
-	setDay(day);
-	setMonth(month);
-	setYear(year);
-	setHour(hour);
-	setMinute(minute);
-	ManagementApp::incrementNumEvents();
-}
-
-Event::Event(const char* name, int day, int month, int year) {
-	setName(name);
-	setDay(day);
-	setMonth(month);
-	setYear(year);
-	ManagementApp::incrementNumEvents();
-}
-
-Event::Event(const char* name, int numMoments, std::string* moments, int day, int month, int year) {
-	setName(name);
-	setMoments(moments, numMoments);
-	setDay(day);
-	setMonth(month);
-	setYear(year);
-	ManagementApp::incrementNumEvents();
-}
-
-Event::Event(const char* name, int numMoments, std::string* moments, int durationOfEachMoment[], int day, int month, int year, int hour, int minute) {
-	setName(name);
-	setMoments(moments, numMoments);
-	setDurationOfEachMoment(durationOfEachMoment);
-	setDay(day);
-	setMonth(month);
-	setYear(year);
-	setHour(hour);
-	setMinute(minute);
-	ManagementApp::incrementNumEvents();
-}
 
 //destructor
 Event::~Event() {
@@ -171,11 +122,8 @@ Event::Event(const Event& e) {
 	this->setNumMoments(e.getNumMoments());
 	this->setMoments(e.getMoments(), this->numMoments);
 	this->setDurationOfEachMoment(e.getDurationOfEachMoment());
-	this->setDay(e.getDay());
-	this->setMonth(e.getMonth());
-	this->setYear(e.getYear());
-	this->setHour(e.getHour());
-	this->setMinute(e.getMinute());
+	this->location = e.location;
+	this->dateTime = e.dateTime;
 	ManagementApp::incrementNumEvents;
 }
 
@@ -197,25 +145,27 @@ std::ostream& operator<<(std::ostream& out, const Event& e) {
 	for (int i = 0; i < e.getNumMoments(); i++) {
 		out << aux[i] << "min/ ";
 	}
+
 	out << std::endl << "Duration of whole event is: " << e.getDurationOfTheEvent();
-	if(e.getDay() > 0 && e.getMonth() > 0 && e.getYear() > 0 ){
-		out << std::endl << "Date(dd/mm/yyyy): " << e.getDay() << "/";
-		if (e.getMonth() < 10) {
-			out << "0" << e.getMonth() << "/";
+
+	if(e.dateTime.getDay() > 0 && e.dateTime.getMonth() > 0 && e.dateTime.getYear() > 0 ){
+		out << std::endl << "Date(dd/mm/yyyy): " << e.dateTime.getDay() << "/";
+		if (e.dateTime.getMonth() < 10) {
+			out << "0" << e.dateTime.getMonth() << "/";
 		}
 		else {
-			out << e.getMonth() << "/";
+			out << e.dateTime.getMonth() << "/";
 		}
-		out << e.getYear();
+		out << e.dateTime.getYear();
 	}
 	
-	if(e.getMinute() >= 0 && e.getHour() > 0){
-		out << std::endl << "Time: " << e.getHour();
-		if (e.getMinute() < 10) {
-			out << ":0" << e.getMinute();
+	if(e.dateTime.getMinute() >= 0 && e.dateTime.getHour() > 0){
+		out << std::endl << "Time: " << e.dateTime.getHour();
+		if (e.dateTime.getMinute() < 10) {
+			out << ":0" << e.dateTime.getMinute();
 		}
 		else {
-			out << ":" << e.getMinute();
+			out << ":" << e.dateTime.getMinute();
 		}
 	}
 	out << std::endl << std::endl << "------------------------" << std::endl << std::endl;
@@ -264,19 +214,19 @@ std::istream& operator>>(std::istream& in, Event& e) {
 	std::cout << std::endl << "Enter the date and time of the event ( ex: 6(day)7(month)2023(year) 18(hour) 5(minute); enter each on a line )";
 	std::cout << std::endl << "Day:";
 	in >> temp;
-	e.setDay(temp);
+	e.dateTime.setDay(temp);
 	std::cout << std::endl << "Month:";
 	in >> temp;
-	e.setMonth(temp);
+	e.dateTime.setMonth(temp);
 	std::cout << std::endl << "Year:";
 	in >> temp;
-	e.setYear(temp);
+	e.dateTime.setYear(temp);
 	std::cout << std::endl << "Hour:";
 	in >> temp;
-	e.setHour(temp);
+	e.dateTime.setHour(temp);
 	std::cout << std::endl << "Minute:";
 	in >> temp;
-	e.setMinute(temp);
+	e.dateTime.setMinute(temp);
 	return in;
 }
 
@@ -292,11 +242,11 @@ Event& Event::operator=(const Event& source) {
 		this->setNumMoments(source.getNumMoments());
 		this->setMoments(source.getMoments(), this->numMoments);
 		this->setDurationOfEachMoment(source.getDurationOfEachMoment());
-		this->setDay(source.getDay());
-		this->setMonth(source.getMonth());
-		this->setYear(source.getYear());
-		this->setHour(source.getHour());
-		this->setMinute(source.getMinute());
+		this->dateTime.setDay(source.dateTime.getDay());
+		this->dateTime.setMonth(source.dateTime.getMonth());
+		this->dateTime.setYear(source.dateTime.getYear());
+		this->dateTime.setHour(source.dateTime.getHour());
+		this->dateTime.setMinute(source.dateTime.getMinute());
 	}
 	return *this;
 }
@@ -313,7 +263,7 @@ int Event::operator[](int index) {
 //operator+
 int Event::operator+(int value) {
 	if (value <= 3) {
-		return this->getHour() + value;
+		return this->dateTime.getHour() + value;
 	}
 	else {
 		throw std::exception("Change too big for the hour of the event, maximum 3 hours of delay!");
@@ -321,7 +271,7 @@ int Event::operator+(int value) {
 }
 int operator+(int value, Event& e) {
 	if (value <= 3) {
-		return e.getHour() + value;
+		return e.dateTime.getHour() + value;
 	}
 	else {
 		throw std::exception("Change too big for the hour of the event, maximum 3 hours of delay!");
@@ -372,5 +322,5 @@ void Event::operator<=(const Event& e) {
 }
 
 bool Event::operator==(const Event& e) {
-	return e.getDay() == this->getDay();
+	return e.dateTime.getDay() == this->dateTime.getDay();
 }

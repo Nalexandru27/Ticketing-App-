@@ -104,6 +104,11 @@ int main() {
 	catch (std::exception& e) {
 		std::cout << std::endl << e.what();
 	}
+	Location theater1(3, new int[3] {6, 12, 10}, "piata romana", new std::string[3]{ "category 1","category 2","box" }, 3);
+	DateTime dateTime1(29, 11, 2023, 19, 30);
+	int v[3]{ 80,15,80 };
+	Event event1("Doi pe o banca", 3, new std::string[3]{ "scena1","pauza","scena2" }, v, theater1, dateTime1);
+	std::cout << event1;
 	/*try {
 		std::cout << std::endl << 
 	}
