@@ -66,7 +66,7 @@ int main() {
 	//std::cout << std::endl << e1;
 
 	//Event e1("doi pe o banca", 3, new std::string[3]{ "mihai","ilona","mircea preda" }, 25, 12, 2025);
-	try {
+	/*try {*/
 		//int v[3]={30,30,35};
 		//Event e2("boxing gala", 3, new std::string[3]{ "moro","stoica","petrisor" }, v);
 		//std::cout << e2.getDurationOfTheEvent();
@@ -80,8 +80,8 @@ int main() {
 		//std::cout << std::endl << e2;
 		////std::cout << std::endl << e2;
 		//std::cout << std::endl; std::cout << std::endl;
-		int v[2] = { 45,45 };
-		Event e3("steaua-dinamo", 2, new std::string[2]{ "repriza1","repriza2" }, v, 26, 11, 2023, 20, 45);
+		/*int v[2] = { 45,45 };
+		Event e3("steaua-dinamo", 2, new std::string[2]{ "repriza1","repriza2" }, v, 26, 11, 2023, 20, 45);*/
 		//std::cin >> e3;
 		//std::cout << std::endl << e3;
 		//Event e4;
@@ -92,11 +92,11 @@ int main() {
 		std::cout << std::endl << 1 + e4;*/
 		/*std::cout << std::endl << e3--;
 		std::cout << std::endl << e3;*/
-		Event e6 = e3;
+		/*Event e6 = e3;*/
 		//std::cout << std::endl<<--e3;
 		//std::cout << std::endl << e6--;
 		//std::cout << std::endl << e6;
-		int b = e3;
+		/*int b = e3;
 		std::cout << std::endl << b;
 		std::cout << std::endl << !e3;
 		e3 <= e6;
@@ -108,7 +108,7 @@ int main() {
 	DateTime dateTime1(29, 11, 2023, 19, 30);
 	int v[3]{ 80,15,80 };
 	Event event1("Doi pe o banca", 3, new std::string[3]{ "scena1","pauza","scena2" }, v, theater1, dateTime1);
-	std::cout << event1;
+	std::cout << event1;*/
 	/*try {
 		std::cout << std::endl << 
 	}
@@ -135,4 +135,21 @@ int main() {
 	std::cout << std::endl << std::endl << location;
 	int a = (int)location;
 	std::cout << std::endl << a;*/
+
+	try {
+		Zone* zone1 = new Zone[2];
+			for (int i = 0; i < 2; i++) {
+				std::cin >> zone1[i];
+			}
+			for (int i = 0; i < 2; i++) {
+				std::cout << std::endl << zone1[i];
+			}
+			Location stadium("Arena Nationala", "Soseaua Pantelimon", 2, zone1);
+			std::cout << stadium;
+	}
+	catch (std::exception e) {
+		std::cout << e.what();
+	}
+	
+
 }

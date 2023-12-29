@@ -15,7 +15,7 @@ private:
 	DateTime dateTime;
 public:
 	Event(){}
-	Event(const char* name, )
+	/*Event(const char* name, )*/
 	Event(const Event& e);
 
 	~Event();

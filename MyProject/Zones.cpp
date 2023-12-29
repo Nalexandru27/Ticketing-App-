@@ -1,5 +1,5 @@
 #include "Zones.h"
-
+#include <iostream>
 void Zone::setName(std::string name)
 {
 	if (name.size() > 3 && name.size() < 25) {
@@ -62,7 +62,7 @@ std::string Zone::getCategory()
 	return this->category;
 }
 
-void Zone::setPrice(int price)
+void Zone::setPrice(float price)
 {
 	if (price > 0) {
 		this->price = price;
@@ -102,7 +102,7 @@ Zone::Zone(const Zone& z)
 	setPrice(z.price);
 }
 
-Zone Zone::operator=(const Zone& z)
+void Zone::operator=(const Zone& z)
 {
 	setName(z.name);
 	setNoRowsAndSeatsPerRow(z.noRows, z.seatsPerRow);
@@ -110,4 +110,51 @@ Zone Zone::operator=(const Zone& z)
 	setPrice(z.price);
 }
 
+std::ostream& operator<<(std::ostream& out, const Zone& zone)
+{
+	out << std::endl << "Name of the zone is: " << zone.name;
+	out << std::endl << zone.name << " has " << zone.noRows << " rows";
+	for (int i = 0; i < zone.noRows; i++) {
+		out << std::endl << "Row " << i << " has: " << zone.seatsPerRow[i] << " seats";
+	}
+	out << std::endl << "Zone category is: " << zone.category;
+	out << std::endl << "Price for a seat in this zone is: " << zone.price << " ron";
+	out << std::endl << "------------------------------------------";
+	return out;
+}
 
+std::istream& operator>>(std::istream& in,Zone& zone) {
+	std::cout << std::endl << "Name of the zone is: ";
+	std::string aux;
+	std::getline(in, aux);
+	zone.setName(aux);
+	int temp;
+	std::cout << std::endl << "How many rows does this zone have: ";
+	in >> temp;
+	if (temp > 0) {
+		zone.noRows = temp;
+		if (zone.seatsPerRow != nullptr) {
+			delete[] zone.seatsPerRow;
+			zone.seatsPerRow = nullptr;
+		}
+		zone.seatsPerRow = new int[temp];
+		for (int i = 0; i < zone.noRows; i++) {
+			std::cout << "How many seats has row no " << i << " ? ";
+			in >> temp;
+			if (temp > 0) {
+				zone.seatsPerRow[i] = temp;
+			}
+		}
+	}
+	std::cout << std::endl << "What category this zone is? ";
+	in.ignore();
+	std::getline(in, aux);
+	zone.setCategory(aux);
+	float a;
+	std::cout << std::endl << "What's the price for a seat in this zone?";
+	in >> a;
+	zone.setPrice(a);
+	in.ignore();
+	std::cout << std::endl << std::endl;
+	return in;
+}

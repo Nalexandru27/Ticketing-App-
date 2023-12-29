@@ -1,39 +1,32 @@
 #pragma once
+#include "Zones.h"
 #include <iostream>
 #include <string>
 
 
 class Location {
 private:
-	int noRows = 0;
-	int* seatsPerRow = nullptr;
+	std::string name = "";
 	char* address = nullptr;
-	int maxNoSeats = 0;
-	std::string* zones = nullptr;
-	int numZones = 0;
+	int noZones = 0;
+	Zone* zones = nullptr;
+
 public:
 	//setters & getters
-	void setNoRows(int newNoRows);
-	int getNoRows();
-
-	void setSeatsPerRow(int* seatsPerRow);
-	int* getSeatsPerRow();
 
 	void setAddress(const char* newAddress);
 	char* getAddress();
 
-	void setMaxNoSeats(int newMaxNoSeats);
-	int getMaxNoSeats();
+	void setName(std::string name);
+	std::string getName();
 
-	void setZones(const std::string* newZones, int size);
-	std::string* getZones();
-
-	int getNumZones();
+	void setNoZonesAndZones(int noZones,Zone* zones);
+	int getNoZones();
+	Zone* getZones();
 
 	//constructors
 	Location();
-	Location(int noRows, int* seatsPerRow, const char* address, int maxNoSeats, std::string* zones, int noZones);
-	Location(int noRows, int* seatsPerRow, const char* address, std::string* zones, int noZones);
+	Location(std::string name, const char* address, int noZones, Zone* zones);
 
 	//copy constructor
 	Location(const Location& source);
@@ -46,37 +39,37 @@ public:
 
 	//operator<<,>>
 	friend std::ostream& operator<<(std::ostream& out, const Location& location);
-	friend std::istream& operator>>(std::istream& in, Location& location);
+	//friend std::istream& operator>>(std::istream& in, Location& location);
 
 
-	//operator[]
-	int& operator[](int row);
+	////operator[]
+	//int& operator[](int row);
 
-	//operator/ object-int
-	int operator/(int seats);
+	////operator/ object-int
+	//int operator/(int seats);
 
-	//operator int-object
-	friend int operator/(int value, Location& location);
+	////operator int-object
+	//friend int operator/(int value, Location& location);
 
-	//operator++ pre
-	Location operator++();
+	////operator++ pre
+	//Location operator++();
 
-	//operator++ post
-	Location operator++(int);
+	////operator++ post
+	//Location operator++(int);
 
-	//operator!
-	bool operator!();
+	////operator!
+	//bool operator!();
 
-	//operator<=
-	bool operator<=(const Location& source);
+	////operator<=
+	//bool operator<=(const Location& source);
 
-	//operator==
-	bool operator==(const Location& source);
+	////operator==
+	//bool operator==(const Location& source);
 
-	//operator+=
-	void operator+=(int value);
+	////operator+=
+	//void operator+=(int value);
 
-	//operator cast
-	explicit operator int();
+	////operator cast
+	//explicit operator int();
 };
 
