@@ -82,6 +82,7 @@ std::ostream& operator<<(std::ostream& out,const Event& e) {
 	out << std::endl << "The event will take place at " << e.location.getName() << ", address: " << e.location.getAddress();
 	out << e.dateTime;
 	out << std::endl << "The event has available " << e.noTickets << " tickets.";
+
 	return out;
 }
 
