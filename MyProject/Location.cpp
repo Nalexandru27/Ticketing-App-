@@ -92,6 +92,15 @@ int Location::getLocationNoSeats() {
 	return s;
 }
 
+int Location::operator[](int zoneIndex) {
+	if (zoneIndex > 0 && zoneIndex <= this->noZones) {
+		return zones[zoneIndex].getZoneNoSeats();
+	}
+	else {
+		throw std::exception("Cannot return the number of seats for this zone");
+	}
+}
+
 //constructors
 Location::Location() {
 	ManagementApp::incrementNumLocations();
@@ -166,6 +175,7 @@ std::istream& operator>>(std::istream& in, Location& location) {
 		location.zones = new Zone[location.noZones];
 		for (int i = 0; i < location.noZones; i++) {
 			std::cout << "Details for zone " << i << ": ";
+			//cin >> location.zones[i]
 		}
 	}
 	return in;

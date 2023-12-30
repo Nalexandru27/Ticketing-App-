@@ -25,6 +25,7 @@ public:
 	Zone* getZones();
 
 	int getLocationNoSeats();
+	
 
 	//constructors
 	Location();
@@ -43,6 +44,8 @@ public:
 	friend std::ostream& operator<<(std::ostream& out, const Location& location);
 	friend std::istream& operator>>(std::istream& in, Location& location);
 
+
+	int operator[](int zoneIndex);
 
 	////operator[]
 	//int& operator[](int row);

@@ -136,22 +136,49 @@ int main() {
 	int a = (int)location;
 	std::cout << std::endl << a;*/
 
-	try {
-		Zone* zone1 = new Zone[2];
-			for (int i = 0; i < 2; i++) {
-				std::cin >> zone1[i];
-			}
-			/*for (int i = 0; i < 2; i++) {
-				std::cout << std::endl << zone1[i];
-			}*/
-			std::cout << std::endl;
-			std::cout << std::endl;
-			Location stadium("Arena Nationala", "Soseaua Pantelimon", 2, zone1);
-			std::cout << stadium;
-	}
-	catch (std::exception e) {
-		std::cout << e.what();
-	}
+	//try {
+	//	Zone* zone1 = new Zone[2];
+	//		for (int i = 0; i < 2; i++) {
+	//			std::cin >> zone1[i];
+	//		}
+	//		/*for (int i = 0; i < 2; i++) {
+	//			std::cout << std::endl << zone1[i];
+	//		}*/
+	//		std::cout << std::endl;
+	//		std::cout << std::endl;
+	//		Location stadium("Arena Nationala", "Soseaua Pantelimon", 2, zone1);
+	//		std::cout << stadium;
+	//}
+	//catch (std::exception e) {
+	//	std::cout << e.what();
+	//}
 	
 
+	Zone* zoneTest = new Zone[3];
+	zoneTest[0].setName("peluza 1");
+	zoneTest[0].setNoRowsAndSeatsPerRow(2, new int[2] {15, 17});
+	zoneTest[0].setCategory("standard");
+	zoneTest[0].setPrice(20);
+
+	zoneTest[1].setName("tribuna 1");
+	zoneTest[1].setNoRowsAndSeatsPerRow(3, new int[3] {4, 6, 8});
+	zoneTest[1].setCategory("premium");
+	zoneTest[1].setPrice(45);
+
+	zoneTest[2].setName("loja centrala");
+	zoneTest[2].setNoRowsAndSeatsPerRow(3, new int[3] {6, 6, 6});
+	zoneTest[2].setCategory("V.I.P");
+	zoneTest[2].setPrice(80);
+
+	/*for (int i = 0; i < 3; i++) {
+		std::cout << zoneTest[i];
+	}*/
+
+	Location locationTest("Arena Nationala", "Soseauna Pantelimon", 3, zoneTest);
+
+	std::cout << locationTest;
+
+	DateTime dateTimeTest(29, 12, 2023, 20, 30);
+
+	Event("Liga 1 FCSB-CFR Cluj", 90, locationTest, dateTimeTest);
 }

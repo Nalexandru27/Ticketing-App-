@@ -3,22 +3,19 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
-const int generateRandomId() {
-	srand((unsigned)time(nullptr));
-	int lowerLimit = 1000000;
-	int upperLimit = 10000000;
-	const int random = rand() % (upperLimit - lowerLimit + 1) + lowerLimit;
-	return random;
-}
+
 
 class Ticket{
 	const int id;
-	int row;
-	int seat;
-	std::string category;
-	std::string zoneName;
-	float price;
+	int row = 0;
+	int seat = 0;
+	std::string category = "";
+	std::string zoneName = "";
+	float price = 0.0f;
 public:
+
+	static const int generateRandomId();
+
 	Ticket();
 	Ticket(int row, int seat, std::string zone, std::string category, float price);
 	//id
@@ -34,9 +31,14 @@ public:
 
 	//category
 	std::string getCategory();
+	void setCategory(std::string category);
 
 	//price
 	float getPrice();
+	void setPrice(float price);
+
+	//zone name
+	void setZoneName(std::string zoneName);
 
 	//constructor
 	Ticket(int id, int row, int seat, std::string category, float price);

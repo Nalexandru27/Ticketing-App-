@@ -6,12 +6,33 @@ using namespace std;
 
 Event::Event():name("none"){}
 
-Event::Event(const char* name, int duration, int noTickets, Ticket* tickets, Location l, DateTime dt):name(name)
+Event::Event(const char* name, int duration, Location l, DateTime dt) :name(name)
 {
 	setDuration(duration);
-	if (noTickets > 0 && noTickets < 100001 && tickets != nullptr) {
-		this->noTickets = 
+	//take the no of zones and for each zone take the number of rows and for every seat set the price 
+	//every seat must have a ticket with a unique id
+	//tickets from a zone have the same zoneName, category and price and a unique seat from a row
+	if (l.getLocationNoSeats() > 0 && l.getZones()!=nullptr) {
+		this->noTickets = l.getLocationNoSeats();
+		this->tickets = new Ticket[this->noTickets];
+		Zone* temp = l.getZones();
+		for (int i = 0; i < l.getNoZones(); i++) {
+			for (int j = 0; j < temp[i].getNoRows(); j++) {
+				int* aux = temp[i].getSeatsPerRows();
+				for (int k = 0; k < aux[j]; k++) {
+					this->tickets[i].setZoneName(temp[i].getName());
+					this->tickets[i].setSeat(k + 1);
+					this->tickets[i].setRow(j + 1);
+					this->tickets[i].setCategory(temp[i].getCategory());
+					this->tickets[i].setPrice(temp[i].getPrice());
+				}
+			}
+		}
 	}
+	else {
+		throw std::exception("Cannot set the tickets in the constructor");
+	}
+	this->dateTime = dt;
 }
 
 char* Event::getName() const{

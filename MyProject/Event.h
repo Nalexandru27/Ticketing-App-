@@ -19,7 +19,7 @@ public:
 	Event();
 	
 	//constructor
-	Event(const char* name, int duration, int noTickets, Ticket* tickets, Location l, DateTime dt);
+	Event(const char* name, int duration, Location l, DateTime dt);
 
 	//get name
 	char* getName() const;

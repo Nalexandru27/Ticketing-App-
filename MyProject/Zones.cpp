@@ -120,10 +120,10 @@ void Zone::operator=(const Zone& z)
 
 std::ostream& operator<<(std::ostream& out, const Zone& zone)
 {
-	out << "Name of the zone is: " << zone.name;
+	out << std::endl << "Name of the zone is: " << zone.name;
 	out << std::endl << zone.name << " has " << zone.noRows << " rows";
 	for (int i = 0; i < zone.noRows; i++) {
-		out << std::endl << "Row " << i << " has: " << zone.seatsPerRow[i] << " seats";
+		out << std::endl << "Row " << i + 1 << " has: " << zone.seatsPerRow[i] << " seats";
 	}
 	out << std::endl << "Zone category is: " << zone.category;
 	out << std::endl << "Price for a seat in this zone is: " << zone.price << " ron";
