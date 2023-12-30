@@ -84,6 +84,14 @@ Zone* Location::getZones()
 	}
 }
 
+int Location::getLocationNoSeats() {
+	int s = 0;
+	for (int i = 0; i < this->noZones; i++) {
+		s += this->zones[i].getZoneNoSeats();
+	}
+	return s;
+}
+
 //constructors
 Location::Location() {
 	ManagementApp::incrementNumLocations();
@@ -125,71 +133,46 @@ void Location::operator=(const Location& source)
 
 //operator <<
 std::ostream& operator<<(std::ostream& out, const Location& location) {
-	std::cout << std::endl << "Name of the location: " << location.name;
-	std::cout << std::endl << "Adrress of the location: " << location.address;
-	std::cout << std::endl << "The location has " << location.noZones << " zones:";
+	out << std::endl << "Name of the location: " << location.name;
+	out << std::endl << "Adrress of the location: " << location.address;
+	out << std::endl << "The location has " << location.noZones << " zones:";
 	for (int i = 0; i < location.noZones; i++) {
-		std::cout << std::endl << location.zones[i];
+		out << std::endl << location.zones[i];
 	}
 	return out;
 }
 
 
-////operator >>
-//std::istream& operator>>(std::istream& in, Location& location) {
-//	std::cout << std::endl << "What is the location Address? Please provide the country, city, street and number of the street:" << std::endl;
-//	char temp[100] = "";
-//	in.getline(temp, sizeof(temp));
-//	if (strlen(temp) < 15) {
-//		throw std::exception("The address is too short. Please provide more information.");
-//	}
-//	else {
-//		if (location.address != nullptr) {
-//			delete[] location.address;
-//			location.address = nullptr;
-//		}
-//		location.address = new char[strlen(temp) + 1];
-//		strcpy_s(location.address, strlen(temp) + 1, temp);
-//	}
-//	std::cout << "Enter the number of rows: ";
-//	int noRows2 = 0;
-//	in >> noRows2;
-//	location.setNoRows(noRows2);
-//	int* seatsPerRow2 = new int[noRows2];
-//	for (int i = 0; i < noRows2; i++) {
-//		std::cout << "Please provide the number of seats for row[" << i + 1 << "]=";
-//		in >> seatsPerRow2[i];
-//	}
-//	location.setSeatsPerRow(seatsPerRow2);
-//	std::cout << "Enter the maxim number of seats for this location: ";
-//	in >> location.maxNoSeats;
-//	std::cout << "Enter the number of zones for this location: ";
-//	in >> location.numZones;
-//	if (location.numZones > 0) {
-//		location.zones = new std::string[location.numZones+1];
-//		in.ignore();
-//		for (int i = 0; i < location.numZones; i++) {
-//			std::cout << "Please enter zone[" << i + 1 << "]: ";
-//			std::string zone;
-//			std::getline(in, zone);
-//			location.zones[i] = zone;
-//		}
-//	}
-//	
-//	return in;
-//}
-//
-//
-////operator[]
-//int& Location::operator[](int row) {
-//	if (this->seatsPerRow != nullptr && row <= this->noRows - 1) {
-//		return this->seatsPerRow[row];
-//	}
-//	else {
-//		throw std::exception("Couldn't provide the value at that index");
-//	}
-//}
-//
+//operator >>
+std::istream& operator>>(std::istream& in, Location& location) {
+	std::cout << std::endl << "What is the name of the location? ";
+	std::string s;
+	in.ignore();
+	std::getline(in, s);
+	location.setName(s);
+	std::cout << std::endl << "What is the address of the location? ";
+	char a[100];
+	in.getline(a, 100);
+	location.setAddress(a);
+	std::cout << std::endl << "How many zones has this location? ";
+	int z;
+	in >> z;
+	if (z > 0) {
+		location.noZones = z;
+		if (location.zones != nullptr) {
+			delete[] location.zones;
+			location.zones = nullptr;
+		}
+		location.zones = new Zone[location.noZones];
+		for (int i = 0; i < location.noZones; i++) {
+			std::cout << "Details for zone " << i << ": ";
+		}
+	}
+	return in;
+}
+
+//operator[]
+
 ////operator/ object-int
 //int Location::operator/(int seats) {
 //	if (this->noRows > 0) {

@@ -77,6 +77,14 @@ float Zone::getPrice()
 	return this->price;
 }
 
+int Zone::getZoneNoSeats() {
+	int s = 0;
+	for (int i = 0; i < this->noRows; i++) {
+		s += this->seatsPerRow[i];
+	}
+	return s;
+}
+
 Zone::Zone(){}
 
 Zone::Zone(std::string name, int noRows, int* seatsPerRow, std::string category, float price)
@@ -112,7 +120,7 @@ void Zone::operator=(const Zone& z)
 
 std::ostream& operator<<(std::ostream& out, const Zone& zone)
 {
-	out << std::endl << "Name of the zone is: " << zone.name;
+	out << "Name of the zone is: " << zone.name;
 	out << std::endl << zone.name << " has " << zone.noRows << " rows";
 	for (int i = 0; i < zone.noRows; i++) {
 		out << std::endl << "Row " << i << " has: " << zone.seatsPerRow[i] << " seats";

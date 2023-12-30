@@ -24,6 +24,8 @@ public:
 	int getNoZones();
 	Zone* getZones();
 
+	int getLocationNoSeats();
+
 	//constructors
 	Location();
 	Location(std::string name, const char* address, int noZones, Zone* zones);
@@ -39,7 +41,7 @@ public:
 
 	//operator<<,>>
 	friend std::ostream& operator<<(std::ostream& out, const Location& location);
-	//friend std::istream& operator>>(std::istream& in, Location& location);
+	friend std::istream& operator>>(std::istream& in, Location& location);
 
 
 	////operator[]

@@ -141,9 +141,11 @@ int main() {
 			for (int i = 0; i < 2; i++) {
 				std::cin >> zone1[i];
 			}
-			for (int i = 0; i < 2; i++) {
+			/*for (int i = 0; i < 2; i++) {
 				std::cout << std::endl << zone1[i];
-			}
+			}*/
+			std::cout << std::endl;
+			std::cout << std::endl;
 			Location stadium("Arena Nationala", "Soseaua Pantelimon", 2, zone1);
 			std::cout << stadium;
 	}

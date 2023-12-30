@@ -16,16 +16,21 @@ class Ticket{
 	int row;
 	int seat;
 	std::string category;
+	std::string zoneName;
 	float price;
 public:
+	Ticket();
+	Ticket(int row, int seat, std::string zone, std::string category, float price);
 	//id
 	const int getId();
 
 	//row
 	int getRow();
+	void setRow(int row);
 
 	//seat
 	int getSeat();
+	void setSeat(int seat);
 
 	//category
 	std::string getCategory();
@@ -40,7 +45,7 @@ public:
 	Ticket(const Ticket& t);
 
 	//operator=
-	Ticket operator=(const Ticket& t);
+	Ticket& operator=(const Ticket& t);
 
 };
 
