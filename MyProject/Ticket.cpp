@@ -11,6 +11,13 @@ const int Ticket::generateRandomId()
 
 Ticket::Ticket():id(generateRandomId()){}
 
+Ticket::Ticket(int row, int seat, std::string zoneName, std::string category, float price) :id(generateRandomId()) {
+	setRow(row);
+	setSeat(seat);
+	setCategory(category);
+	setPrice(price);
+	setZoneName(zoneName);
+}
 
 void Ticket::setRow(int row) {
 	if (row > 0) {
@@ -91,3 +98,7 @@ Ticket& Ticket::operator=(const Ticket& t) {
 	return *this;
 }
 
+
+std::ostream& operator<<(std::ostream& out, const Ticket t) {
+	out <<std::endl<<"Ticket id is: " << t.
+}

@@ -33,8 +33,8 @@ public:
 	Ticket* getTickets();
 	void setNoTicketsAndTickets(int noTickets,Ticket* tickets);
 
-	//friend std::ostream& operator<<(std::ostream& out, const Event& e);
-	//friend std::istream& operator>>(std::istream& in, Event& e);
+	friend std::ostream& operator<<(std::ostream& out,const Event& e);
+	friend std::istream& operator>>(std::istream& in, Event& e);
 
 	////operator=
 	//Event& operator=(const Event& source);

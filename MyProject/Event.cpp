@@ -1,14 +1,13 @@
 #include "Event.h"
 #include <string>
 #include <iostream>
-using namespace std;
-
 
 Event::Event():name("none"){}
 
 Event::Event(const char* name, int duration, Location l, DateTime dt) :name(name)
 {
 	setDuration(duration);
+	this->location = l;
 	//take the no of zones and for each zone take the number of rows and for every seat set the price 
 	//every seat must have a ticket with a unique id
 	//tickets from a zone have the same zoneName, category and price and a unique seat from a row
@@ -75,6 +74,15 @@ void Event::setNoTicketsAndTickets(int noTickets, Ticket* tickets){
 			this->tickets[i] = tickets[i];
 		}
 	}
+}
+
+std::ostream& operator<<(std::ostream& out,const Event& e) {
+	out << std::endl << "Event name is: " << e.name;
+	out << std::endl << "Duration of the event is: " << e.duration <<"min";
+	out << std::endl << "The event will take place at " << e.location.getName() << ", address: " << e.location.getAddress();
+	out << e.dateTime;
+	out << std::endl << "The event has available " << e.noTickets << " tickets.";
+	return out;
 }
 
 

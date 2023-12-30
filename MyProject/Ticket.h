@@ -16,38 +16,39 @@ public:
 
 	static const int generateRandomId();
 
+	//constructors
 	Ticket();
-	Ticket(int row, int seat, std::string zone, std::string category, float price);
+	Ticket(int row, int seat, std::string zoneName, std::string category, float price);
+
 	//id
-	const int getId();
+	const int getId() const;
 
 	//row
-	int getRow();
+	int getRow() const;
 	void setRow(int row);
 
 	//seat
-	int getSeat();
+	int getSeat() const;
 	void setSeat(int seat);
 
 	//category
-	std::string getCategory();
+	std::string getCategory() const;
 	void setCategory(std::string category);
 
 	//price
-	float getPrice();
+	float getPrice() const;
 	void setPrice(float price);
 
 	//zone name
 	void setZoneName(std::string zoneName);
+	std::string getZoneName() const;
 
-	//constructor
-	Ticket(int id, int row, int seat, std::string category, float price);
+	//copy constructor - no dynamic attributes
+	//Ticket(const Ticket& t);
 
-	//copy constructor
-	Ticket(const Ticket& t);
-
-	//operator=
+	//operator= - no dynamic attributes
 	Ticket& operator=(const Ticket& t);
 
+	friend std::ostream& operator<<(std::ostream& out, const Ticket t);
 };
 

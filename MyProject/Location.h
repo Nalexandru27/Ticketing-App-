@@ -15,16 +15,16 @@ public:
 	//setters & getters
 
 	void setAddress(const char* newAddress);
-	char* getAddress();
+	char* getAddress() const;
 
 	void setName(std::string name);
-	std::string getName();
+	std::string getName() const;
 
 	void setNoZonesAndZones(int noZones,Zone* zones);
-	int getNoZones();
-	Zone* getZones();
+	int getNoZones() const;
+	Zone* getZones() const;
 
-	int getLocationNoSeats();
+	int getLocationNoSeats() const;
 	
 
 	//constructors

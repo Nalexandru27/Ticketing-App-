@@ -19,7 +19,7 @@ void Location::setAddress(const char* newAddress) {
 }
 
 //get address
-char* Location::getAddress() {
+char* Location::getAddress() const{
 	if (this->address == nullptr) {
 		throw std::exception("There is no address yet");
 	}
@@ -42,7 +42,7 @@ void Location::setName(const std::string name)
 }
 
 //get name
-std::string Location::getName()
+std::string Location::getName() const
 {
 	return this->name;
 }
@@ -64,13 +64,13 @@ void Location::setNoZonesAndZones(int noZones, Zone* zones)
 }
 
 //get number of zones
-int Location::getNoZones()
+int Location::getNoZones() const
 {
 	return this->noZones;
 }
 
 //get zones
-Zone* Location::getZones()
+Zone* Location::getZones() const
 {
 	if (this->zones != nullptr && this->noZones > 0) {
 		Zone* temp = new Zone[this->noZones];
@@ -84,7 +84,7 @@ Zone* Location::getZones()
 	}
 }
 
-int Location::getLocationNoSeats() {
+int Location::getLocationNoSeats() const {
 	int s = 0;
 	for (int i = 0; i < this->noZones; i++) {
 		s += this->zones[i].getZoneNoSeats();
