@@ -21,27 +21,27 @@ public:
 	Ticket(int row, int seat, std::string zoneName, std::string category, float price);
 
 	//id
-	const int getId() const;
+	const int getId();
 
 	//row
-	int getRow() const;
+	int getRow();
 	void setRow(int row);
 
 	//seat
-	int getSeat() const;
+	int getSeat();
 	void setSeat(int seat);
 
 	//category
-	std::string getCategory() const;
+	std::string getCategory();
 	void setCategory(std::string category);
 
 	//price
-	float getPrice() const;
+	float getPrice();
 	void setPrice(float price);
 
 	//zone name
 	void setZoneName(std::string zoneName);
-	std::string getZoneName() const;
+	std::string getZoneName();
 
 	//copy constructor - no dynamic attributes
 	//Ticket(const Ticket& t);
@@ -49,6 +49,6 @@ public:
 	//operator= - no dynamic attributes
 	Ticket& operator=(const Ticket& t);
 
-	friend std::ostream& operator<<(std::ostream& out, const Ticket t);
+	friend std::ostream& operator<<(std::ostream& out, Ticket t);
 };
 

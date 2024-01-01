@@ -97,6 +97,9 @@ int operator+(int value, Event& e)
 	if (value > 0) {
 		return value + e.duration;
 	}
+	else {
+		throw std::exception("cannot make the addition, must add a positive value");
+	}
 }
 
 Event::Event(const Event& e):name(e.name) {
@@ -114,10 +117,13 @@ Event& Event::operator=(const Event& e) {
 	return *this;
 }
 
-int Event::operator[](int index)
+float Event::operator[](int index)
 {
 	if (this->tickets != nullptr && index > 0 && index <= noTickets) {
 		return this->tickets[index].getPrice();
+	}
+	else {
+		throw std::exception("cannot return the value at that index");
 	}
 }
 
@@ -125,6 +131,9 @@ int Event::operator+(int value)
 {
 	if (value > 0) {
 		return this->duration + value;
+	}
+	else {
+		throw std::exception("cannot make the addition, must add a positive value");
 	}
 }
 

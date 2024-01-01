@@ -46,6 +46,11 @@ void Ticket::setCategory(std::string category) {
 	}
 }
 
+float Ticket::getPrice()
+{
+	return this->price;
+}
+
 void Ticket::setPrice(float price) {
 	if (price > 0) {
 		this->price = price;
@@ -99,9 +104,10 @@ Ticket& Ticket::operator=(const Ticket& t) {
 }
 
 
-std::ostream& operator<<(std::ostream& out, const Ticket t) {
-	out << std::endl << "Ticket id is: " << t.getId();
-	out << std::endl << "Ticket row " << t.getRow() << " and seat " << t.getSeat();
-	out << std::endl << "Ticket zone is " << t.getCategory() << " and zone " << t.getZoneName();
-	out << std::endl << "Ticket price is: " << t.getPrice();
+std::ostream& operator<<(std::ostream& out, Ticket t) {
+	out << std::endl << "Ticket id is: " << t.id;
+	out << std::endl << "Ticket row " << t.row << " and seat " << t.seat;
+	out << std::endl << "Ticket zone is " << t.category << " and zone " << t.zoneName;
+	out << std::endl << "Ticket price is: " << t.price;
+	return out;
 }

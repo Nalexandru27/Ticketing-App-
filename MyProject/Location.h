@@ -26,7 +26,7 @@ public:
 
 	int getLocationNoSeats() const;
 	
-	virtual void DisplayInfo() = 0;
+	virtual void displayInfo();
  
 	//constructors
 	Location();

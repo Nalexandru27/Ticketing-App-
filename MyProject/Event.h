@@ -46,7 +46,7 @@ public:
 	Event& operator=(const Event& e);
 
 	//operator[]
-	int operator[](int index);
+	float operator[](int index);
 
 	//operator+
 	int operator+(int value);

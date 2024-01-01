@@ -92,6 +92,16 @@ int Location::getLocationNoSeats() const {
 	return s;
 }
 
+void Location::displayInfo()
+{
+	std::cout << std::endl << "Name of the location: " << this->name;
+	std::cout << std::endl << "Adrress of the location: " << this->address;
+	std::cout << std::endl << "The location has " << this->noZones << " zones:";
+	for (int i = 0; i < this->noZones; i++) {
+		std::cout << std::endl << this->zones[i];
+	}
+}
+
 int Location::operator[](int zoneIndex) {
 	if (zoneIndex > 0 && zoneIndex <= this->noZones) {
 		return zones[zoneIndex].getZoneNoSeats();

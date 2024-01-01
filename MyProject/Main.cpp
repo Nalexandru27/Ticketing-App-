@@ -3,6 +3,7 @@
 #include "Location.h"
 #include "Event.h"
 #include "ManagementApp.h"
+#include "CinemaCity.h"
 int main() {
 
 	//testing the class Location
@@ -155,17 +156,17 @@ int main() {
 	
 
 		Zone* zoneTest = new Zone[3];
-		zoneTest[0].setName("peluza 1");
+		zoneTest[0].setName("Hall 1");
 		zoneTest[0].setNoRowsAndSeatsPerRow(2, new int[2] {15, 17});
 		zoneTest[0].setCategory("standard");
 		zoneTest[0].setPrice(20);
 
-		zoneTest[1].setName("tribuna 1");
+		zoneTest[1].setName("Hall 2");
 		zoneTest[1].setNoRowsAndSeatsPerRow(3, new int[3] {4, 6, 8});
 		zoneTest[1].setCategory("premium");
 		zoneTest[1].setPrice(45);
 
-		zoneTest[2].setName("loja centrala");
+		zoneTest[2].setName("Hall 3");
 		zoneTest[2].setNoRowsAndSeatsPerRow(3, new int[3] {6, 6, 6});
 		zoneTest[2].setCategory("V.I.P");
 		zoneTest[2].setPrice(80);
@@ -174,17 +175,26 @@ int main() {
 			std::cout << zoneTest[i];
 		}*/
 
-		Location locationTest("Arena Nationala", "Soseauna Pantelimon", 3, zoneTest);
+		//Location locationTest("Arena Nationala", "Soseauna Pantelimon", 3, zoneTest);
 
 		//std::cout << locationTest;
 
-		DateTime dateTimeTest(29, 12, 2023, 20, 30);
+		//DateTime dateTimeTest(29, 12, 2023, 20, 30);
 
-		Event eventTest("Liga 1 FCSB-CFR Cluj", 90, locationTest, dateTimeTest);
+		/*Event eventTest("Liga 1 FCSB-CFR Cluj", 90, locationTest, dateTimeTest);
 		try{
 			std::cout << eventTest;
 		}
 		catch (std::exception e) {
 			std::cout << e.what();
+		}*/
+		
+		try {
+			CinemaCity cinema1("CinemaCity SunPlaza", "Piata Sudului", 3, zoneTest, 3, new std::string[3]{ "Alba ca zapada","Cenusareasa","Harap Alb"}, true, true);
+			cinema1.displayInfo();
 		}
+		catch (std::exception e) {
+			std::cout << e.what();
+		}
+		
 }
