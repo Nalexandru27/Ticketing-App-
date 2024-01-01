@@ -24,6 +24,9 @@ public:
 	//copy constructor
 	Event(const Event& e);
 
+	//destructor
+	~Event();
+
 	//get name
 	char* getName() const;
 

@@ -5,7 +5,7 @@
 
 
 class Location {
-private:
+protected:
 	std::string name = "";
 	char* address = nullptr;
 	int noZones = 0;
@@ -26,7 +26,8 @@ public:
 
 	int getLocationNoSeats() const;
 	
-
+	virtual void DisplayInfo() = 0;
+ 
 	//constructors
 	Location();
 	Location(std::string name, const char* address, int noZones, Zone* zones);

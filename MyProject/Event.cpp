@@ -4,6 +4,13 @@
 
 Event::Event():name("none"){}
 
+Event::~Event() {
+	if (this->tickets != nullptr) {
+		delete[] this->tickets;
+		this->tickets = nullptr;
+	}
+}
+
 Event::Event(const char* name, int duration, Location l, DateTime dt) :name(name)
 {
 	setDuration(duration);
