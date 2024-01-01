@@ -181,59 +181,57 @@ std::istream& operator>>(std::istream& in, Location& location) {
 	return in;
 }
 
-//operator[]
-
 ////operator/ object-int
-//int Location::operator/(int seats) {
-//	if (this->noRows > 0) {
-//		return this->noRows / seats;
-//	}
-//	else {
-//		throw std::exception("Can't divide 0");
-//	}
-//}
-//
-////operator / int-object
-//int operator/(int value, Location& location) {
-//	return value / location.getNoRows();
-//}
-//
-//
-////operator++ pre
-//Location Location::operator++() {
-//	++this->noRows;
-//	return *this;
-//}
-//
-////operator++ post
-//Location Location::operator++(int) {
-//	Location copy = *this;
-//	this->noRows++;
-//	return copy;
-//}
-//
-////operator!
-//bool Location::operator!() {
-//	return !this->address; //return true is address = nullptr, false if address exists
-//}
-//
-////operator<=
-//bool Location::operator<=(const Location& source) {
-//	return this->maxNoSeats <= source.maxNoSeats;
-//}
-//
-////operator==
-//bool Location::operator==(const Location& source) {
-//	return this->noRows == source.noRows;
-//}
-//
-////operator+=
-//void Location::operator+=(int value) {
-//	this->maxNoSeats += value;
-//}
-//
-////operator cast
-//Location::operator int() {
-//	return this->getNumZones();
-//}
+int Location::operator/(int row) {
+	if (this->getLocationNoSeats() > 0) {
+		return this->getLocationNoSeats() / row;
+	}
+	else {
+		throw std::exception("Can't divide 0");
+	}
+}
+
+//operator / int-object
+int operator/(int value, Location& location) {
+	return value / location.getNoZones();
+}
+
+
+//operator++ pre
+Location Location::operator++() {
+	++this->noZones;
+	return *this;
+}
+
+//operator++ post
+Location Location::operator++(int) {
+	Location copy = *this;
+	this->noZones++;
+	return copy;
+}
+
+//operator!
+bool Location::operator!() {
+	return !this->address; //return true if address = nullptr, false if address exists
+}
+
+//operator<=
+bool Location::operator<=(const Location& source) {
+	return this->noZones <= source.noZones;
+}
+
+//operator==
+bool Location::operator==(const Location& source) {
+	return this->noZones == source.noZones;
+}
+
+//operator+=
+void Location::operator+=(int value) {
+	this->noZones += value;
+}
+
+//operator cast
+Location::operator int() {
+	return this->noZones;
+}
 

@@ -21,6 +21,9 @@ public:
 	//constructor
 	Event(const char* name, int duration, Location l, DateTime dt);
 
+	//copy constructor
+	Event(const Event& e);
+
 	//get name
 	char* getName() const;
 
@@ -36,33 +39,33 @@ public:
 	friend std::ostream& operator<<(std::ostream& out,const Event& e);
 	friend std::istream& operator>>(std::istream& in, Event& e);
 
-	////operator=
-	//Event& operator=(const Event& source);
+	//operator=
+	Event& operator=(const Event& e);
 
-	////operator[]
-	//int operator[](int index);
+	//operator[]
+	int operator[](int index);
 
-	////operator+
-	//int operator+(int value);
-	//friend int operator+(int value, Event& e);
+	//operator+
+	int operator+(int value);
+	friend int operator+(int value, Event& e);
 
-	////operator-- predecrementation
-	//Event operator--();
+	//operator-- predecrementation
+	Event operator--();
 
-	////operator-- postdecrementation
-	//Event operator--(int);
+	//operator-- postdecrementation
+	Event operator--(int);
 
-	////operator cast (int)
-	//operator int();
+	//operator cast (int)
+	operator int();
 
-	////operator!
-	//bool operator!();
+	//operator!
+	bool operator!();
 
-	////operator<=
-	//void operator<=(const Event& e);
+	//operator<=
+	bool operator<=(const Event& e);
 
-	////operator==
-	//bool operator==(const Event& e);
+	//operator==
+	bool operator==(const Event& e);
 };
 
 

@@ -82,9 +82,81 @@ std::ostream& operator<<(std::ostream& out,const Event& e) {
 	out << std::endl << "The event will take place at " << e.location.getName() << ", address: " << e.location.getAddress();
 	out << e.dateTime;
 	out << std::endl << "The event has available " << e.noTickets << " tickets.";
-
 	return out;
 }
+
+int operator+(int value, Event& e)
+{
+	if (value > 0) {
+		return value + e.duration;
+	}
+}
+
+Event::Event(const Event& e):name(e.name) {
+	setDuration(e.duration);
+	setNoTicketsAndTickets(e.noTickets, e.tickets);
+	this->location = e.location;
+	this->dateTime = e.dateTime;
+}
+
+Event& Event::operator=(const Event& e) {
+	setDuration(e.duration);
+	setNoTicketsAndTickets(e.noTickets, e.tickets);
+	this->location = e.location;
+	this->dateTime = e.dateTime;
+	return *this;
+}
+
+int Event::operator[](int index)
+{
+	if (this->tickets != nullptr && index > 0 && index <= noTickets) {
+		return this->tickets[index].getPrice();
+	}
+}
+
+int Event::operator+(int value)
+{
+	if (value > 0) {
+		return this->duration + value;
+	}
+}
+
+Event Event::operator--()
+{
+	--this->noTickets;
+	return *this;
+}
+
+Event Event::operator--(int)
+{
+	Event copy = *this;
+	this->noTickets--;
+	return copy;
+}
+
+Event::operator int()
+{
+	return this->duration;
+}
+
+bool Event::operator!()
+{
+	return !this->name;
+}
+
+bool Event::operator<=(const Event& e)
+{
+	return this->noTickets <= e.noTickets;
+}
+
+bool Event::operator==(const Event& e)
+{
+	return this->duration == e.duration;
+}
+
+
+
+
 
 
 

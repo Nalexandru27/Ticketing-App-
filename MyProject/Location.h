@@ -44,37 +44,35 @@ public:
 	friend std::ostream& operator<<(std::ostream& out, const Location& location);
 	friend std::istream& operator>>(std::istream& in, Location& location);
 
-
+	//operator[]
 	int operator[](int zoneIndex);
 
-	////operator[]
-	//int& operator[](int row);
 
-	////operator/ object-int
-	//int operator/(int seats);
+	//operator/ object-int
+	int operator/(int row);
 
-	////operator int-object
-	//friend int operator/(int value, Location& location);
+	//operator int-object
+	friend int operator/(int value, Location& location);
 
-	////operator++ pre
-	//Location operator++();
+	//operator++ pre
+	Location operator++();
 
-	////operator++ post
-	//Location operator++(int);
+	//operator++ post
+	Location operator++(int);
 
-	////operator!
-	//bool operator!();
+	//operator!
+	bool operator!();
 
-	////operator<=
-	//bool operator<=(const Location& source);
+	//operator<=
+	bool operator<=(const Location& source);
 
-	////operator==
-	//bool operator==(const Location& source);
+	//operator==
+	bool operator==(const Location& source);
 
-	////operator+=
-	//void operator+=(int value);
+	//operator+=
+	void operator+=(int value);
 
-	////operator cast
-	//explicit operator int();
+	//operator cast
+	explicit operator int();
 };
 
