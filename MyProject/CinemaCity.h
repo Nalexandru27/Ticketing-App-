@@ -2,6 +2,7 @@
 #include "Location.h"
 #include <string>
 #include "ManagementApp.h"
+#include <fstream>
 class CinemaCity :public Location
 {private:
 	int noMovies=0;
@@ -26,5 +27,8 @@ public:
 	void setHasNoCaffeLounge();
 	
 	void displayInfo();
+
+	void readData(std::ifstream& file);
+	void writeData(std::ofstream& file);
 };
 

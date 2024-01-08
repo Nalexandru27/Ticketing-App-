@@ -46,5 +46,7 @@ public:
 
 	//operator>>
 	friend std::istream& operator>>(std::istream& in, Zone& zone);
+
+	void writeData(std::ofstream& file);
 };
 

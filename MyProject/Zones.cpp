@@ -1,5 +1,6 @@
 #include "Zones.h"
 #include <iostream>
+#include<fstream>
 void Zone::setName(std::string name)
 {
 	if (name.size() > 3 && name.size() < 25) {
@@ -116,6 +117,25 @@ void Zone::operator=(const Zone& z)
 	setNoRowsAndSeatsPerRow(z.noRows, z.seatsPerRow);
 	setCategory(z.category);
 	setPrice(z.price);
+}
+
+void Zone::writeData(std::ofstream& file)
+{
+	if (!file.is_open()) {
+		throw std::exception("file is not opened");
+	}
+	int nameSize = this->name.size() + 1;
+	file.write((char*)&nameSize, sizeof(int));
+	file.write(this->name.c_str(), sizeof(char) * nameSize);
+	file.write((char*)this->noRows, sizeof(int));
+	for (int i = 0; i < this->noRows; i++) {
+		file.write((char*)this->seatsPerRow[i], sizeof(int));
+	}
+	int categorySize = this->category.size() + 1;
+	file.write((char*)categorySize, sizeof(int));
+	file.write(this->category.c_str(), sizeof(char) * categorySize);
+	file.write((char*)this->price, sizeof(float));
+
 }
 
 std::ostream& operator<<(std::ostream& out, const Zone& zone)

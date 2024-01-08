@@ -47,7 +47,7 @@ public:
 	//Ticket(const Ticket& t);
 
 	//operator= - no dynamic attributes
-	Ticket& operator=(const Ticket& t);
+	//Ticket& operator=(const Ticket& t);
 
 	friend std::ostream& operator<<(std::ostream& out, Ticket t);
 };
