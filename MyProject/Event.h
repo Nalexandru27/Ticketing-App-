@@ -29,6 +29,7 @@ public:
 
 	//get name
 	char* getName() const;
+	void setName(const char* name);
 
 	//get, set duration
 	int getDuration();

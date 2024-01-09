@@ -73,12 +73,32 @@ void Event::setDuration(int duration) {
 	}
 }
 
+void Event::setName(const char* name)
+{
+	if (name != nullptr) {
+		if (this->name != nullptr) {
+			delete[]this->name;
+			this->name = nullptr;
+		}
+		this->name = new char[strlen(name) + 1];
+		strcpy_s(this->name, strlen(name) + 1, name);
+	}
+	else {
+		throw std::exception("Cannot set the name");
+	}
+}
+
 int Event::getDuration() {
 	return this->duration;
 }
 
 int Event::getNoTickets() {
 	return this->noTickets;
+}
+
+Ticket* Event::getTickets()
+{
+	return nullptr;
 }
 
 void Event::setNoTicketsAndTickets(int noTickets, Ticket* tickets){

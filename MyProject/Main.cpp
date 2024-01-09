@@ -220,7 +220,7 @@ int main() {
 	}*/
 
 
-	CinemaCity cinema1("CinemaCity SunPlaza", "Piata Sudului", 3, zoneTest, 3, new std::string[3]{ "Alba ca zapada","Cenusareasa","Harap Alb" }, true, true);
+	CinemaCity cinema1("CinemaCity SunPlaza", "Piata Sudului", 3, zoneTest, 3, new std::string[3]{ "Alba ca zapada","Cenusareasa","Spiderman-HomeComeback" }, true, true);
 	cinema1.displayInfo();
 
 	std::ofstream report("cinemaReport.bin", std::ios::binary | std::ios::out);
@@ -248,8 +248,57 @@ int main() {
 	std::cout << std::endl << std::endl <<std::endl << std::endl  << "Welcome to Tickets_Online_Platform!";
 	std::cout << std::endl << std::endl << std::endl << "We are selling tickets for these events: ";
 
-	Event* events = new Event[5];
-	for (int i = 0; i < 5; i++) {
-		events[i] = 
+	Zone* zoneStadion = new Zone[4];
+	zoneStadion[0].setName("Peluza Nord");
+	zoneStadion[0].setNoRowsAndSeatsPerRow(3, new int[3] {12, 12, 12});
+	zoneStadion[0].setCategory("Categoria III");
+	zoneStadion[0].setPrice(15);
+
+	zoneStadion[1].setName("Peluza Sud");
+	zoneStadion[1].setNoRowsAndSeatsPerRow(3, new int[3] {12, 12, 12});
+	zoneStadion[1].setCategory("Categoria III");
+	zoneStadion[1].setPrice(15);
+
+	zoneStadion[2].setName("Tribuna 1");
+	zoneStadion[2].setNoRowsAndSeatsPerRow(3, new int[3] {10, 10, 10});
+	zoneStadion[2].setCategory("Categoria II");
+	zoneStadion[2].setPrice(30);
+
+	zoneStadion[3].setName("Loja Centrala");
+	zoneStadion[3].setNoRowsAndSeatsPerRow(3, new int[3] {8, 8, 8});
+	zoneStadion[3].setCategory("Categoria I");
+	zoneStadion[3].setPrice(50);
+
+	DateTime dtStadion(10, 1, 2024, 20, 30);
+
+	Location location1("National Arena", "Soseaua Pantelimon nr. 10", 4, zoneStadion);
+	Event event1("FCSB-DINAMO", 90, location1, dtStadion);
+
+	DateTime dtSpiderman(11, 1, 2024, 17, 15);
+	Event event2("Spiderman-HomeComeback", 130, cinema1, dtSpiderman);
+
+	Zone* zoneSalaPalatului = new Zone[3];
+	zoneSalaPalatului[0].setName("In fata scenei");
+	zoneSalaPalatului[0].setNoRowsAndSeatsPerRow(3, new int[3] {12, 12, 12});
+	zoneSalaPalatului[0].setCategory("Categoria Premium");
+	zoneSalaPalatului[0].setPrice(159);
+
+	zoneSalaPalatului[1].setName("In dreapta scenei");
+	zoneSalaPalatului[1].setNoRowsAndSeatsPerRow(3, new int[3] {12, 12, 12});
+	zoneSalaPalatului[1].setCategory("Categoria Normal");
+	zoneSalaPalatului[1].setPrice(99);
+
+	zoneSalaPalatului[2].setName("In stanga scenei");
+	zoneSalaPalatului[2].setNoRowsAndSeatsPerRow(3, new int[3] {12, 12, 12});
+	zoneSalaPalatului[2].setCategory("Categoria Normal");
+	zoneSalaPalatului[2].setPrice(99);
+
+	DateTime dtConcertAndra(13, 1, 2024, 20, 0);
+	Location location3("Sala Palatului", "Piata Romana", 3, zoneSalaPalatului);
+	Event event3("Concert Andra", 150, location3, dtConcertAndra);
+
+	std::ifstream eventsSchedule("reportEvents.bin", std::ios::binary | std::ios::app);
+	for (int i = 0; i < ManagementApp::getNumEvents(); i++) {
+
 	}
 }
