@@ -27,6 +27,8 @@ public:
 	int getLocationNoSeats() const;
 	
 	virtual void displayInfo();
+
+	void saveDataLocation(std::ofstream& file);
  
 	//constructors
 	Location();

@@ -1,6 +1,7 @@
 #include "Zones.h"
 #include <iostream>
-#include<fstream>
+#include <fstream>
+#include "ClassUtils.h"
 void Zone::setName(std::string name)
 {
 	if (name.size() > 3 && name.size() < 25) {
@@ -111,12 +112,13 @@ Zone::Zone(const Zone& z)
 	setPrice(z.price);
 }
 
-void Zone::operator=(const Zone& z)
+Zone& Zone::operator=(Zone& z)
 {
 	setName(z.name);
 	setNoRowsAndSeatsPerRow(z.noRows, z.seatsPerRow);
 	setCategory(z.category);
 	setPrice(z.price);
+	return *this;
 }
 
 void Zone::writeData(std::ofstream& file)
@@ -124,18 +126,33 @@ void Zone::writeData(std::ofstream& file)
 	if (!file.is_open()) {
 		throw std::exception("file is not opened");
 	}
-	int nameSize = this->name.size() + 1;
+	int nameSize = strlen(this->name.c_str())+1;
 	file.write((char*)&nameSize, sizeof(int));
 	file.write(this->name.c_str(), sizeof(char) * nameSize);
-	file.write((char*)this->noRows, sizeof(int));
+	file.write((char*)&this->noRows, sizeof(int));
 	for (int i = 0; i < this->noRows; i++) {
-		file.write((char*)this->seatsPerRow[i], sizeof(int));
+		file.write((char*)&this->seatsPerRow[i], sizeof(int));
 	}
-	int categorySize = this->category.size() + 1;
-	file.write((char*)categorySize, sizeof(int));
+	int categorySize = strlen(this->category.c_str()) + 1;
+	file.write((char*)&categorySize, sizeof(int));
 	file.write(this->category.c_str(), sizeof(char) * categorySize);
-	file.write((char*)this->price, sizeof(float));
+	file.write((char*)&this->price, sizeof(float));
+}
 
+Zone& Zone::readDataZone(std::ifstream& file)
+{
+	if (!file.is_open()) {
+		throw std::exception("file is not opened");
+	}
+	Zone temp;
+	temp.name = ClassUtils::deserializeString(file);
+	file.read((char*)&temp.noRows, sizeof(int));
+	for (int i = 0; i < temp.noRows; i++) {
+		file.read((char*)&temp.seatsPerRow[i], sizeof(int));
+	}
+	temp.category = ClassUtils::deserializeString(file);
+	file.read((char*)&temp.price, sizeof(float));
+	return temp;
 }
 
 std::ostream& operator<<(std::ostream& out, const Zone& zone)

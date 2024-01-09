@@ -2,7 +2,8 @@
 #include <iostream>
 #include <string>
 #include "ManagementApp.h"
-
+#include <fstream>
+#include "ClassUtils.h"
 //set adrress
 void Location::setAddress(const char* newAddress) {
 	if (newAddress == nullptr) {
@@ -100,6 +101,21 @@ void Location::displayInfo()
 	for (int i = 0; i < this->noZones; i++) {
 		std::cout << std::endl << this->zones[i];
 	}
+}
+
+void Location::saveDataLocation(std::ofstream& file)
+{
+	if (!file.is_open()) {
+		throw std::exception("file is not opened");
+	}
+	int nameSize = strlen(this->name.c_str()) + 1;
+	file.write((char*)&nameSize, sizeof(int));
+	file.write(this->name.c_str(), sizeof(char) * nameSize);
+	int addressSize = strlen(this->address) + 1;
+	file.write((char*)&addressSize, sizeof(int));
+	file.write(this->address, sizeof(char) * addressSize);
+	file.write((char*)&this->noZones, sizeof(int));
+	this->zones->writeData(file);
 }
 
 int Location::operator[](int zoneIndex) {

@@ -189,13 +189,10 @@ int main() {
 			std::cout << e.what();
 		}*/
 		
-		try {
-			CinemaCity cinema1("CinemaCity SunPlaza", "Piata Sudului", 3, zoneTest, 3, new std::string[3]{ "Alba ca zapada","Cenusareasa","Harap Alb"}, true, true);
-			cinema1.displayInfo();
-		}
-		catch (std::exception e) {
-			std::cout << e.what();
-		}
 		
-
+		CinemaCity cinema1("CinemaCity SunPlaza", "Piata Sudului", 3, zoneTest, 3, new std::string[3]{ "Alba ca zapada","Cenusareasa","Harap Alb"}, true, true);
+		cinema1.displayInfo();
+		
+		std::ofstream report("cinemaReport.bin", std::ios::binary);
+		cinema1.writeData(report);
 }
