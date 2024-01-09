@@ -18,11 +18,11 @@ Event::~Event() {
 	}
 }
 
-Event::Event(const char* name, int duration, Location l, DateTime dt)
+Event::Event(const char* name, int duration, Location& l, DateTime& dt)
 {
 	if (name != nullptr) {
 		this->name = new char[strlen(name) + 1];
-		strcpy_s(this->name, strlen(this->name) + 1, name);
+		strcpy_s(this->name, strlen(name) + 1, name);
 	}
 	setDuration(duration);
 	this->location = l;
@@ -34,8 +34,8 @@ Event::Event(const char* name, int duration, Location l, DateTime dt)
 		this->tickets = new Ticket[this->noTickets];
 		Zone* temp = l.getZones();
 		for (int i = 0; i < l.getNoZones(); i++) {
+			int* aux = temp[i].getSeatsPerRows();
 			for (int j = 0; j < temp[i].getNoRows(); j++) {
-				int* aux = temp[i].getSeatsPerRows();
 				for (int k = 0; k < aux[j]; k++) {
 					this->tickets[i].setZoneName(temp[i].getName());
 					this->tickets[i].setSeat(k + 1);
@@ -44,6 +44,7 @@ Event::Event(const char* name, int duration, Location l, DateTime dt)
 					this->tickets[i].setPrice(temp[i].getPrice());
 				}
 			}
+			delete[] aux;
 		}
 		delete[] temp;
 	}
@@ -65,7 +66,7 @@ char* Event::getName() const{
 }
 
 void Event::setDuration(int duration) {
-	if (duration >= 30 && duration <= 300) {
+	if (duration >= 10 && duration <= 300) {
 		this->duration = duration;
 	}
 	else {
@@ -94,11 +95,6 @@ int Event::getDuration() {
 
 int Event::getNoTickets() {
 	return this->noTickets;
-}
-
-Ticket* Event::getTickets()
-{
-	return nullptr;
 }
 
 void Event::setNoTicketsAndTickets(int noTickets, Ticket* tickets){
@@ -134,7 +130,8 @@ int operator+(int value, Event& e)
 	}
 }
 
-Event::Event(const Event& e):name(e.name) {
+Event::Event(const Event& e){
+	setName(e.name);
 	setDuration(e.duration);
 	setNoTicketsAndTickets(e.noTickets, e.tickets);
 	this->location = e.location;
@@ -142,6 +139,7 @@ Event::Event(const Event& e):name(e.name) {
 }
 
 Event& Event::operator=(const Event& e) {
+	setName(e.name);
 	setDuration(e.duration);
 	setNoTicketsAndTickets(e.noTickets, e.tickets);
 	this->location = e.location;
@@ -209,7 +207,7 @@ void Event::saveEventData(std::ofstream& file)
 		throw std::exception("file is not opened");
 	}
 	int nameSize = strlen(this->name)+1;
-	file.write((char*)&this->name, sizeof(int));
+	file.write((char*)&nameSize, sizeof(int));
 	file.write(this->name, sizeof(char) * nameSize);
 	file.write((char*)&this->duration, sizeof(int));
 	file.write((char*)&this->noTickets, sizeof(int));

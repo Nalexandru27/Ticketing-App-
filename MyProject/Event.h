@@ -19,7 +19,7 @@ public:
 	Event();
 	
 	//constructor
-	Event(const char* name, int duration, Location l, DateTime dt);
+	Event(const char* name, int duration, Location& l, DateTime& dt);
 
 	//copy constructor
 	Event(const Event& e);
@@ -37,7 +37,6 @@ public:
 
 	//get, set tickets
 	int getNoTickets();
-	Ticket* getTickets();
 	void setNoTicketsAndTickets(int noTickets,Ticket* tickets);
 
 	void saveEventData(std::ofstream& file);

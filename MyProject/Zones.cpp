@@ -51,7 +51,7 @@ int* Zone::getSeatsPerRows()
 
 void Zone::setCategory(std::string category)
 {
-	if (category.size() > 0 && category.size() < 12) {
+	if (category.size() > 0 && category.size() < 25) {
 		this->category = category;
 	}
 	else {
