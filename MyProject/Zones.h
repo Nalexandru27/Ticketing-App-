@@ -39,6 +39,7 @@ public:
 	Zone(const Zone& z);
 
 	//operator=
+	//void operator=(const Zone& z);
 	Zone& operator=(Zone z);
 
 	//operator<<

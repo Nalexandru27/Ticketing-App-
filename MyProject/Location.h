@@ -29,7 +29,8 @@ public:
 	virtual void displayInfo();
 
 	void saveDataLocation(std::ofstream& file);
- 
+	void readDataLocation(std::ifstream& file);
+
 	//constructors
 	Location();
 	Location(std::string name, const char* address, int noZones, Zone* zones);

@@ -108,14 +108,36 @@ void Location::saveDataLocation(std::ofstream& file)
 	if (!file.is_open()) {
 		throw std::exception("file is not opened");
 	}
-	int nameSize = strlen(this->name.c_str()) + 1;
-	file.write((char*)&nameSize, sizeof(int));
-	file.write(this->name.c_str(), sizeof(char) * nameSize);
+	ClassUtils::serializeString(this->name, file);
 	int addressSize = strlen(this->address) + 1;
 	file.write((char*)&addressSize, sizeof(int));
 	file.write(this->address, sizeof(char) * addressSize);
 	file.write((char*)&this->noZones, sizeof(int));
-	this->zones->writeZoneData(file);
+	for (int i = 0; i < this->noZones; i++) {
+		this->zones[i].writeZoneData(file);
+	}
+}
+
+void Location::readDataLocation(std::ifstream& file)
+{
+	this->name = ClassUtils::deserializeString(file);
+	int addressSize = 0;
+	file.read((char*)&addressSize, sizeof(int));
+	if (this->address != nullptr) {
+		delete[]this->address;
+		this->address = nullptr;
+	}
+	this->address = new char[addressSize];
+	file.read(this->address, sizeof(char) * addressSize);
+	file.read((char*)&this->noZones, sizeof(int));
+	if (this->zones != nullptr) {
+		delete[] this->zones;
+		this->zones = nullptr;
+	}
+	this->zones = new Zone[this->noZones];
+	for (int i = 0; i < this->noZones; i++) {
+		this->zones[i] = Zone::readDataZone(file);
+	}
 }
 
 int Location::operator[](int zoneIndex) {

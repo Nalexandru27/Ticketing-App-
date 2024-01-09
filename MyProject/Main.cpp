@@ -171,7 +171,7 @@ int main() {
 	zoneTest[2].setCategory("V.I.P");
 	zoneTest[2].setPrice(80);
 
-
+	//it works :)
 	std::ofstream report2("zoneReport.bin", std::ios::binary | std::ios::out);
 	for (int i = 0; i < 3; i++) {
 		zoneTest[i].writeZoneData(report2);
@@ -186,6 +186,20 @@ int main() {
 	for (int i = 0; i < 3; i++) {
 		std::cout << zoneTest2[i];
 	}
+	getZone.close();
+	//writing and reading data from a binary file for zones
+
+
+	Location l("sala polivalenta", "strada george enescu", 3, zoneTest);
+	std::ofstream locationReport("location.bin", std::ios::binary | std::ios::out);
+	l.saveDataLocation(locationReport);
+	locationReport.close();
+
+	std::ifstream locationData("location.bin", std::ios::binary | std::ios::in);
+	Location l2;
+	l2.readDataLocation(locationData);
+	std::cout << std::endl << "Printing location read from file (test)";
+	std::cout << l2;
 
 	/*for (int i = 0; i < 3; i++) {
 		std::cout << zoneTest[i];
@@ -213,13 +227,13 @@ int main() {
 	cinema1.writeData(report);
 	report.close();
 
-	/*CinemaCity cinema2;
+	CinemaCity cinema2;
 	std::ifstream getCinemaData("cinemaReport.bin", std::ios::binary | std::ios::in);
 	cinema2.readData(getCinemaData);
 
 	std::cout << std::endl << std::endl << std::endl << std::endl;
 	cinema2.displayInfo();
-	getCinemaData.close();*/
+	getCinemaData.close();
 
 
 }

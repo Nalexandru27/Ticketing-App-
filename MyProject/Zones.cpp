@@ -112,6 +112,14 @@ Zone::Zone(const Zone& z)
 	setPrice(z.price);
 }
 
+//void Zone::operator=(const Zone& z)
+//{
+//	setName(z.name);
+//	setNoRowsAndSeatsPerRow(z.noRows, z.seatsPerRow);
+//	setCategory(z.category);
+//	setPrice(z.price);
+//}
+
 Zone& Zone::operator=(Zone z)
 {
 	setName(z.name);
@@ -147,6 +155,10 @@ Zone Zone::readDataZone(std::ifstream& file)
 	Zone temp;
 	temp.name = ClassUtils::deserializeString(file);
 	file.read((char*)&temp.noRows, sizeof(int));
+	if (temp.seatsPerRow != nullptr) {
+		delete[] temp.seatsPerRow;
+		temp.seatsPerRow = nullptr;
+	}
 	temp.seatsPerRow = new int[temp.noRows];
 	for (int i = 0; i < temp.noRows; i++) {
 		file.read((char*)&temp.seatsPerRow[i], sizeof(int));
