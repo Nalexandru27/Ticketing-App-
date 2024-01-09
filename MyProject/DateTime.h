@@ -44,5 +44,8 @@ public:
 
 	DateTime operator++();
 	DateTime operator++(int);
+
+	void saveDateTime(std::ofstream& file);
+	void readDateTime(std::ifstream& file);
 };
 

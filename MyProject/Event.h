@@ -39,6 +39,9 @@ public:
 	Ticket* getTickets();
 	void setNoTicketsAndTickets(int noTickets,Ticket* tickets);
 
+	void saveEventData(std::ofstream& file);
+	void getEventRaport(std::ifstream& file);
+
 	friend std::ostream& operator<<(std::ostream& out,const Event& e);
 	friend std::istream& operator>>(std::istream& in, Event& e);
 

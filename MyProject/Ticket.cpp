@@ -1,5 +1,6 @@
 #include "Ticket.h"
-
+#include <fstream>
+#include "ClassUtils.h"
 const int Ticket::generateRandomId()
 {
 	srand((unsigned)time(nullptr));
@@ -103,11 +104,35 @@ Ticket& Ticket::operator=(const Ticket& t) {
 	return *this;
 }
 
+void Ticket::saveTicketsData(std::ofstream& file)
+{
+	file.write((char*)&this->id, sizeof(int));
+	file.write((char*)&this->row, sizeof(int));
+	file.write((char*)&this->seat, sizeof(int));
+	ClassUtils::serializeString(this->category,file);
+	ClassUtils::serializeString(this->zoneName, file);
+	file.write((char*)&this->price, sizeof(float));
+}
+
+void Ticket::getTicketsRaport(std::ifstream& file)
+{
+	file.read((char*)&this->id, sizeof(int));
+	file.read((char*)&this->row, sizeof(int));
+	file.read((char*)&this->seat, sizeof(int));
+	this->category = ClassUtils::deserializeString(file);
+	this->zoneName = ClassUtils::deserializeString(file);
+	file.read((char*)&this->price, sizeof(float));
+
+}
+
+
 
 std::ostream& operator<<(std::ostream& out, Ticket t) {
 	out << std::endl << "Ticket id is: " << t.id;
-	out << std::endl << "Ticket row " << t.row << " and seat " << t.seat;
-	out << std::endl << "Ticket zone is " << t.category << " and zone " << t.zoneName;
-	out << std::endl << "Ticket price is: " << t.price;
+	out << std::endl << "Ticket is for: " << t.zoneName;
+	out << std::endl << "Ticket row is: " << t.row << " and seat is: " << t.seat;
+	out << std::endl << "Ticket category is: " << t.category;
+	out << std::endl << "Ticket price is: " << t.price << " ron";
+	out << std::endl;
 	return out;
 }

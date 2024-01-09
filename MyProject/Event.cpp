@@ -1,7 +1,8 @@
 #include "Event.h"
 #include <string>
 #include <iostream>
-
+#include <fstream>
+#include "ClassUtils.h"
 Event::Event():name("none"){}
 
 Event::~Event() {
@@ -170,6 +171,23 @@ bool Event::operator==(const Event& e)
 	return this->duration == e.duration;
 }
 
+
+void Event::saveEventData(std::ofstream& file) 
+{
+	if (!file.is_open()) {
+		throw std::exception("file is not opened");
+	}
+	int nameSize = strlen(this->name)+1;
+	file.write((char*)&this->name, sizeof(int));
+	file.write(this->name, sizeof(char) * nameSize);
+	file.write((char*)&this->duration, sizeof(int));
+	file.write((char*)&this->noTickets, sizeof(int));
+	for (int i = 0; i < this->noTickets; i++) {
+		tickets[i].saveTicketData(file);
+	}
+	location.saveDataLocation(file);
+
+}
 
 
 

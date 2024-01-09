@@ -120,6 +120,9 @@ void Location::saveDataLocation(std::ofstream& file)
 
 void Location::readDataLocation(std::ifstream& file)
 {
+	if (!file.is_open()) {
+		throw std::exception("file is not opened");
+	}
 	this->name = ClassUtils::deserializeString(file);
 	int addressSize = 0;
 	file.read((char*)&addressSize, sizeof(int));

@@ -157,7 +157,7 @@ int main() {
 
 	Zone* zoneTest = new Zone[3];
 	zoneTest[0].setName("Hall 1");
-	zoneTest[0].setNoRowsAndSeatsPerRow(2, new int[2] {15, 17});
+	zoneTest[0].setNoRowsAndSeatsPerRow(2, new int[2] {5, 5});
 	zoneTest[0].setCategory("standard");
 	zoneTest[0].setPrice(20);
 
@@ -234,6 +234,17 @@ int main() {
 	std::cout << std::endl << std::endl << std::endl << std::endl;
 	cinema2.displayInfo();
 	getCinemaData.close();
+
+	Ticket t(3, 12, "Hall 1", "Normal", 20);
+	std::cout << std::endl << std::endl << std::endl << t;
+
+	Ticket* ticketsTest = new Ticket[10];
+	for (int i = 0; i < 10; i++) {
+		//
+	}
+
+	std::cout << std::endl << std::endl <<std::endl << std::endl  << "Welcome to Tickets_Online_Platform!";
+	std::cout << std::endl << std::endl << std::endl << "We are selling tickets for these events: ";
 
 
 }

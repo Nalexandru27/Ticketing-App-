@@ -49,5 +49,9 @@ public:
 	Ticket& operator=(const Ticket& t);
 
 	friend std::ostream& operator<<(std::ostream& out, Ticket t);
+
+	void saveTicketsData(std::ofstream& file);
+	void getTicketsRaport(std::ifstream& file);
+
 };
 
