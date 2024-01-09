@@ -121,25 +121,12 @@ void CinemaCity::displayInfo()
 
 }
 
-
 void CinemaCity::readData(std::ifstream& file)
 {
 	if (!file.is_open()) {
 		throw std::exception("file is not opened");
 	}
-	this->name = ClassUtils::deserializeString(file);
-	int addressSize = 0;
-	file.read((char*)&addressSize, sizeof(int));
-	if (this->address != nullptr) {
-		delete[]this->address;
-		this->address = nullptr;
-	}
-	this->address = new char[addressSize];
-	file.read(this->address, sizeof(char) * addressSize);
-	file.read((char*)&this->noZones, sizeof(int));
-	for (int i = 0; i < this->noZones; i++) {
-		this->zones[i] = Zone::readDataZone(file);
-	}
+	readDataLocation(file);
 	file.read((char*)&this->noMovies, sizeof(int));
 	if (this->movies != nullptr) {
 		delete[] this->movies;
@@ -161,9 +148,7 @@ void CinemaCity::writeData(std::ofstream& file) {
 	this->saveDataLocation(file);
 	file.write((char*)&this->noMovies, sizeof(int));
 	for (int i = 0; i < this->noMovies; i++) {
-		int movieSize = this->movies[i].size() + 1;
-		file.write((char*)&movieSize, sizeof(int));
-		file.write(this->movies[i].c_str(), sizeof(char) * movieSize);
+		ClassUtils::serializeString(this->movies[i], file);
 	}
 	file.write((char*)&this->cinemaIsInTheMall, sizeof(bool));
 	file.write((char*)&this->hasCaffeLounge, sizeof(bool));
