@@ -3,17 +3,27 @@
 #include <iostream>
 #include <fstream>
 #include "ClassUtils.h"
-Event::Event():name("none"){}
+
+Event::Event(){}
+
 
 Event::~Event() {
+	if (this->name != nullptr) {
+		delete[] this->name;
+		this->name = nullptr;
+	}
 	if (this->tickets != nullptr) {
-		delete[] this->tickets;
+		delete[]this->tickets;
 		this->tickets = nullptr;
 	}
 }
 
-Event::Event(const char* name, int duration, Location l, DateTime dt) :name(name)
+Event::Event(const char* name, int duration, Location l, DateTime dt)
 {
+	if (name != nullptr) {
+		this->name = new char[strlen(name) + 1];
+		strcpy_s(this->name, strlen(this->name) + 1, name);
+	}
 	setDuration(duration);
 	this->location = l;
 	//take the no of zones and for each zone take the number of rows and for every seat set the price 
@@ -35,6 +45,7 @@ Event::Event(const char* name, int duration, Location l, DateTime dt) :name(name
 				}
 			}
 		}
+		delete[] temp;
 	}
 	else {
 		throw std::exception("Cannot set the tickets in the constructor");
@@ -186,7 +197,33 @@ void Event::saveEventData(std::ofstream& file)
 		tickets[i].saveTicketData(file);
 	}
 	location.saveDataLocation(file);
+	dateTime.saveDateTime(file);
+}
 
+void Event::getEventData(std::ifstream& file) {
+	if (!file.is_open()) {
+		throw std::exception("file is not opened");
+	}
+	int nameSize = 0;
+	file.read((char*)&nameSize, sizeof(int));
+	if (this->name != nullptr) {
+		delete[]this->name;
+		this->name = nullptr;
+	}
+	this->name = new char[nameSize];
+	file.read(this->name, sizeof(char) * nameSize);
+	file.read((char*)&this->duration, sizeof(int));
+	file.read((char*)&this->noTickets, sizeof(int));
+	if (this->tickets != nullptr) {
+		delete[] this->tickets;
+		this->tickets = nullptr;
+	}
+	this->tickets = new Ticket[this->noTickets];
+	for (int i = 0; i < this->noTickets; i++) {
+		this->tickets[i].getTicketRaport(file);
+	}
+	this->location.readDataLocation(file);
+	this->dateTime.readDateTime(file);
 }
 
 

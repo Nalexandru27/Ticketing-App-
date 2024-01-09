@@ -50,8 +50,8 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& out, Ticket t);
 
-	void saveTicketsData(std::ofstream& file);
-	void getTicketsRaport(std::ifstream& file);
+	void saveTicketData(std::ofstream& file);
+	void getTicketRaport(std::ifstream& file);
 
 };
 

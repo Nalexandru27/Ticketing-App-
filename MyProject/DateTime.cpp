@@ -1,6 +1,6 @@
 #include "DateTime.h"
 #include <iostream>
-
+#include <fstream>
 //set Day of event
 void DateTime::setDay(int day) {
 	if (day >= 1 && day <= 31) {
@@ -205,4 +205,27 @@ DateTime DateTime::operator++(int) {
 	return copy;
 }
 
+void DateTime::saveDateTime(std::ofstream& file) {
+	if (!file.is_open()) {
+		throw std::exception("file is not opened");
+	}
+	file.write((char*)&this->day, sizeof(int));
+	file.write((char*)&this->month, sizeof(int));
+	file.write((char*)&this->year, sizeof(int));
+	file.write((char*)&this->hour, sizeof(int));
+	file.write((char*)&this->minute, sizeof(int));
+
+}
+
+void DateTime::readDateTime(std::ifstream& file) {
+	if (!file.is_open()) {
+		throw std::exception("file is not opened");
+	}
+	file.read((char*)&this->day, sizeof(int));
+	file.read((char*)&this->month, sizeof(int));
+	file.read((char*)&this->year, sizeof(int));
+	file.read((char*)&this->hour, sizeof(int));
+	file.read((char*)&this->minute, sizeof(int));
+
+}
 

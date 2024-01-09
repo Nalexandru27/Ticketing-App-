@@ -104,8 +104,11 @@ Ticket& Ticket::operator=(const Ticket& t) {
 	return *this;
 }
 
-void Ticket::saveTicketsData(std::ofstream& file)
+void Ticket::saveTicketData(std::ofstream& file)
 {
+	if (!file.is_open()) {
+		throw std::exception("file is not opened");
+	}
 	file.write((char*)&this->id, sizeof(int));
 	file.write((char*)&this->row, sizeof(int));
 	file.write((char*)&this->seat, sizeof(int));
@@ -114,15 +117,17 @@ void Ticket::saveTicketsData(std::ofstream& file)
 	file.write((char*)&this->price, sizeof(float));
 }
 
-void Ticket::getTicketsRaport(std::ifstream& file)
+void Ticket::getTicketRaport(std::ifstream& file)
 {
+	if (!file.is_open()) {
+		throw std::exception("file is not opened");
+	}
 	file.read((char*)&this->id, sizeof(int));
 	file.read((char*)&this->row, sizeof(int));
 	file.read((char*)&this->seat, sizeof(int));
 	this->category = ClassUtils::deserializeString(file);
 	this->zoneName = ClassUtils::deserializeString(file);
 	file.read((char*)&this->price, sizeof(float));
-
 }
 
 

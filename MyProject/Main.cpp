@@ -243,8 +243,13 @@ int main() {
 		//
 	}
 
+	delete[] ticketsTest;
+	delete[] zoneTest;
 	std::cout << std::endl << std::endl <<std::endl << std::endl  << "Welcome to Tickets_Online_Platform!";
 	std::cout << std::endl << std::endl << std::endl << "We are selling tickets for these events: ";
 
-
+	Event* events = new Event[5];
+	for (int i = 0; i < 5; i++) {
+		events[i] = 
+	}
 }

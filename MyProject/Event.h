@@ -8,7 +8,7 @@
 
 class Event{
 private:
-	const char* name = nullptr;
+	char* name = nullptr;
 	int duration = 0;
 	int noTickets = 0;
 	Ticket* tickets = nullptr;
@@ -40,7 +40,7 @@ public:
 	void setNoTicketsAndTickets(int noTickets,Ticket* tickets);
 
 	void saveEventData(std::ofstream& file);
-	void getEventRaport(std::ifstream& file);
+	void getEventData(std::ifstream& file);
 
 	friend std::ostream& operator<<(std::ostream& out,const Event& e);
 	friend std::istream& operator>>(std::istream& in, Event& e);
