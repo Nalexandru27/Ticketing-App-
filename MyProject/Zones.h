@@ -39,7 +39,7 @@ public:
 	Zone(const Zone& z);
 
 	//operator=
-	Zone& operator=(Zone& z);
+	Zone& operator=(Zone z);
 
 	//operator<<
 	friend std::ostream& operator<<(std::ostream& out, const Zone& zone);
@@ -47,7 +47,7 @@ public:
 	//operator>>
 	friend std::istream& operator>>(std::istream& in, Zone& zone);
 
-	void writeData(std::ofstream& file);
-	static Zone& readDataZone(std::ifstream& file);
+	void writeZoneData(std::ofstream& file);
+	static Zone readDataZone(std::ifstream& file); //? &
 };
 

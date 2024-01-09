@@ -112,7 +112,7 @@ Zone::Zone(const Zone& z)
 	setPrice(z.price);
 }
 
-Zone& Zone::operator=(Zone& z)
+Zone& Zone::operator=(Zone z)
 {
 	setName(z.name);
 	setNoRowsAndSeatsPerRow(z.noRows, z.seatsPerRow);
@@ -121,7 +121,7 @@ Zone& Zone::operator=(Zone& z)
 	return *this;
 }
 
-void Zone::writeData(std::ofstream& file)
+void Zone::writeZoneData(std::ofstream& file)
 {
 	if (!file.is_open()) {
 		throw std::exception("file is not opened");
@@ -139,7 +139,7 @@ void Zone::writeData(std::ofstream& file)
 	file.write((char*)&this->price, sizeof(float));
 }
 
-Zone& Zone::readDataZone(std::ifstream& file)
+Zone Zone::readDataZone(std::ifstream& file)
 {
 	if (!file.is_open()) {
 		throw std::exception("file is not opened");
@@ -147,6 +147,7 @@ Zone& Zone::readDataZone(std::ifstream& file)
 	Zone temp;
 	temp.name = ClassUtils::deserializeString(file);
 	file.read((char*)&temp.noRows, sizeof(int));
+	temp.seatsPerRow = new int[temp.noRows];
 	for (int i = 0; i < temp.noRows; i++) {
 		file.read((char*)&temp.seatsPerRow[i], sizeof(int));
 	}

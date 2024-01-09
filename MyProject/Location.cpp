@@ -115,7 +115,7 @@ void Location::saveDataLocation(std::ofstream& file)
 	file.write((char*)&addressSize, sizeof(int));
 	file.write(this->address, sizeof(char) * addressSize);
 	file.write((char*)&this->noZones, sizeof(int));
-	this->zones->writeData(file);
+	this->zones->writeZoneData(file);
 }
 
 int Location::operator[](int zoneIndex) {
@@ -155,6 +155,10 @@ Location::~Location()
 	if (this->zones != nullptr) {
 		delete[] this->zones;
 		this->zones = nullptr;
+	}
+	if (this->address != nullptr) {
+		delete[] this->address;
+		this->address = nullptr;
 	}
 }
 

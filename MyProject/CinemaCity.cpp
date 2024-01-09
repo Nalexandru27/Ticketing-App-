@@ -121,6 +121,7 @@ void CinemaCity::displayInfo()
 
 }
 
+
 void CinemaCity::readData(std::ifstream& file)
 {
 	if (!file.is_open()) {
@@ -139,8 +140,19 @@ void CinemaCity::readData(std::ifstream& file)
 	for (int i = 0; i < this->noZones; i++) {
 		this->zones[i] = Zone::readDataZone(file);
 	}
-
+	file.read((char*)&this->noMovies, sizeof(int));
+	if (this->movies != nullptr) {
+		delete[] this->movies;
+		this->movies = nullptr;
+	}
+	this->movies = new std::string[this->noMovies];
+	for (int i = 0; i < this->noMovies; i++) {
+		this->movies[i] = ClassUtils::deserializeString(file);
+	}
+	file.read((char*)&this->cinemaIsInTheMall, sizeof(bool));
+	file.read((char*)&this->hasCaffeLounge, sizeof(bool));
 }
+
 
 void CinemaCity::writeData(std::ofstream& file) {
 	if (!file.is_open()) {

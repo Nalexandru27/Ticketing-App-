@@ -111,7 +111,7 @@ int main() {
 	Event event1("Doi pe o banca", 3, new std::string[3]{ "scena1","pauza","scena2" }, v, theater1, dateTime1);
 	std::cout << event1;*/
 	/*try {
-		std::cout << std::endl << 
+		std::cout << std::endl <<
 	}
 	catch (std::exception& e) {
 		std::cout << std::endl << e.what();
@@ -153,46 +153,73 @@ int main() {
 	//catch (std::exception e) {
 	//	std::cout << e.what();
 	//}
-	
 
-		Zone* zoneTest = new Zone[3];
-		zoneTest[0].setName("Hall 1");
-		zoneTest[0].setNoRowsAndSeatsPerRow(2, new int[2] {15, 17});
-		zoneTest[0].setCategory("standard");
-		zoneTest[0].setPrice(20);
 
-		zoneTest[1].setName("Hall 2");
-		zoneTest[1].setNoRowsAndSeatsPerRow(3, new int[3] {4, 6, 8});
-		zoneTest[1].setCategory("premium");
-		zoneTest[1].setPrice(45);
+	Zone* zoneTest = new Zone[3];
+	zoneTest[0].setName("Hall 1");
+	zoneTest[0].setNoRowsAndSeatsPerRow(2, new int[2] {15, 17});
+	zoneTest[0].setCategory("standard");
+	zoneTest[0].setPrice(20);
 
-		zoneTest[2].setName("Hall 3");
-		zoneTest[2].setNoRowsAndSeatsPerRow(3, new int[3] {6, 6, 6});
-		zoneTest[2].setCategory("V.I.P");
-		zoneTest[2].setPrice(80);
+	zoneTest[1].setName("Hall 2");
+	zoneTest[1].setNoRowsAndSeatsPerRow(3, new int[3] {4, 6, 8});
+	zoneTest[1].setCategory("premium");
+	zoneTest[1].setPrice(45);
 
-		/*for (int i = 0; i < 3; i++) {
-			std::cout << zoneTest[i];
-		}*/
+	zoneTest[2].setName("Hall 3");
+	zoneTest[2].setNoRowsAndSeatsPerRow(3, new int[3] {6, 6, 6});
+	zoneTest[2].setCategory("V.I.P");
+	zoneTest[2].setPrice(80);
 
-		//Location locationTest("Arena Nationala", "Soseauna Pantelimon", 3, zoneTest);
 
-		//std::cout << locationTest;
+	std::ofstream report2("zoneReport.bin", std::ios::binary | std::ios::out);
+	for (int i = 0; i < 3; i++) {
+		zoneTest[i].writeZoneData(report2);
+	}
+	report2.close();
 
-		//DateTime dateTimeTest(29, 12, 2023, 20, 30);
+	std::ifstream getZone("zoneReport.bin", std::ios::binary | std::ios::in);
+	Zone* zoneTest2 = new Zone[3];
+	for (int i = 0; i < 3; i++) {
+		zoneTest2[i] = Zone::readDataZone(getZone);
+	}
+	for (int i = 0; i < 3; i++) {
+		std::cout << zoneTest2[i];
+	}
 
-		/*Event eventTest("Liga 1 FCSB-CFR Cluj", 90, locationTest, dateTimeTest);
-		try{
-			std::cout << eventTest;
-		}
-		catch (std::exception e) {
-			std::cout << e.what();
-		}*/
-		
-		
-		CinemaCity cinema1("CinemaCity SunPlaza", "Piata Sudului", 3, zoneTest, 3, new std::string[3]{ "Alba ca zapada","Cenusareasa","Harap Alb"}, true, true);
-		cinema1.displayInfo();
-		
-		std::ofstream report("cinemaReport.bin", std::ios::binary);
-		cinema1.writeData(report);
+	/*for (int i = 0; i < 3; i++) {
+		std::cout << zoneTest[i];
+	}*/
+
+	//Location locationTest("Arena Nationala", "Soseauna Pantelimon", 3, zoneTest);
+
+	//std::cout << locationTest;
+
+	//DateTime dateTimeTest(29, 12, 2023, 20, 30);
+
+	/*Event eventTest("Liga 1 FCSB-CFR Cluj", 90, locationTest, dateTimeTest);
+	try{
+		std::cout << eventTest;
+	}
+	catch (std::exception e) {
+		std::cout << e.what();
+	}*/
+
+
+	CinemaCity cinema1("CinemaCity SunPlaza", "Piata Sudului", 3, zoneTest, 3, new std::string[3]{ "Alba ca zapada","Cenusareasa","Harap Alb" }, true, true);
+	cinema1.displayInfo();
+
+	std::ofstream report("cinemaReport.bin", std::ios::binary | std::ios::out);
+	cinema1.writeData(report);
+	report.close();
+
+	/*CinemaCity cinema2;
+	std::ifstream getCinemaData("cinemaReport.bin", std::ios::binary | std::ios::in);
+	cinema2.readData(getCinemaData);
+
+	std::cout << std::endl << std::endl << std::endl << std::endl;
+	cinema2.displayInfo();
+	getCinemaData.close();*/
+
+
 }
